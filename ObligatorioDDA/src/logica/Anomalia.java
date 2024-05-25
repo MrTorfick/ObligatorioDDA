@@ -10,4 +10,6 @@ package logica;
  */
 public class Anomalia {
 
+
+
 }

@@ -5,23 +5,29 @@
 package SimuladorIU;
 
 import java.util.ArrayList;
+
+import inicio.DatosPrueba;
+import logica.Parking;
 import logica.SensorPrueba;
 import simuladortransito.Estacionable;
 import simuladortransito.Transitable;
+import simuladorIU.SimuladorIU;
 
 
 /**
- *
  * @author marcos
  */
 public class IniciarSimuladorIU {
 
-    /*
-    SensorPrueba sensor = new SensorPrueba();
-    ArrayList<Estacionable> cocheras = DatosPrueba.getCocheras(50);
-    ArrayList<Transitable> vehiculos = DatosPrueba.getVehiculos(50);
-    new SimuladorIU(null, false,sensor,cocheras,vehiculos).setVisible(true);
-*/
+    public static void main(String[] args) {
+        SensorPrueba sensor = new SensorPrueba();
+
+
+        ArrayList<Estacionable> cocheras = DatosPrueba.getCocheras(50);
+        ArrayList<Transitable> vehiculos = DatosPrueba.getVehiculos(50);
+        new SimuladorIU(null, false, sensor, cocheras, vehiculos).setVisible(true);
+
+    }
 
 
 }

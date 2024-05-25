@@ -8,6 +8,10 @@ package logica;
  *
  * @author marcos
  */
-public class TipoEtiquetaDiscapacitado {
-    
+public class TipoEtiquetaDiscapacitado extends TipoEtiqueta{
+
+    @Override
+    public double calcularMulta() {
+        return 0;
+    }
 }

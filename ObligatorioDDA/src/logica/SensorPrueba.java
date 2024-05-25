@@ -4,11 +4,25 @@
  */
 package logica;
 
+import simuladortransito.Estacionable;
+import simuladortransito.Sensor;
+import simuladortransito.Transitable;
+
 /**
  *
  * @author marcos
  */
-public class SensorPrueba {
+public class SensorPrueba implements Sensor {
+
+    @Override
+    public void ingreso(Transitable transitable, Estacionable estacionable) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void egreso(Transitable transitable, Estacionable estacionable) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 }

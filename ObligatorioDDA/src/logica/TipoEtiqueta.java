@@ -5,9 +5,23 @@
 package logica;
 
 /**
- *
  * @author marcos
  */
-public class TipoEtiqueta {
-    
+public abstract class TipoEtiqueta {
+
+    private String nombre;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void validar(){
+        //TODO
+    }
+
+    public abstract double calcularMulta();
 }

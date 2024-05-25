@@ -5,9 +5,12 @@
 package logica;
 
 /**
- *
  * @author marcos
  */
-public class TipoEtiquetaEmpleo {
-    
+public class TipoEtiquetaEmpleo extends TipoEtiqueta {
+
+    @Override
+    public double calcularMulta() {
+        return 0;
+    }
 }

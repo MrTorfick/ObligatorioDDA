@@ -7,7 +7,6 @@ package logica;
 import java.util.ArrayList;
 
 /**
- *
  * @author marcos
  */
 public class Fachada {
@@ -28,4 +27,11 @@ public class Fachada {
         sParking.agregarParking(nombre, direccion, listaTarifa, listaCocheras);
     }
 
+    public ArrayList<Parking> getListaParkings() {
+        return sParking.getListaParkings();
+    }
+
+    public ArrayList<Cochera> getCocheras() {
+        return sParking.getCocheras();
+    }
 }
