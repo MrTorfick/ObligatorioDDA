@@ -19,9 +19,15 @@ public abstract class TipoEtiqueta {
         this.nombre = nombre;
     }
 
-    public void validar(){
+    public void validar() {
         //TODO
     }
 
     public abstract double calcularMulta();
+
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

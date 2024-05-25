@@ -7,11 +7,10 @@ package logica;
 import java.util.ArrayList;
 
 /**
- *
  * @author marcos
  */
 public class Parking {
-    
+
     private String nombre;
     private String direccion;
     private ArrayList<Tarifa> listaTarifas;
@@ -24,7 +23,6 @@ public class Parking {
         this.listaCocheras = listaCocheras;
     }
 
-   
 
     public String getNombre() {
         return nombre;
@@ -50,7 +48,6 @@ public class Parking {
         this.listaTarifas = listaTarifas;
     }
 
-    
 
     public ArrayList<Cochera> getListaCocheras() {
         return listaCocheras;
@@ -59,8 +56,6 @@ public class Parking {
     public void setListaCocheras(ArrayList<Cochera> listaCocheras) {
         this.listaCocheras = listaCocheras;
     }
-    
-    
-    
-    
+
+
 }

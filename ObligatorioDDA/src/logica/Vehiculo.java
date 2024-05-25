@@ -5,14 +5,14 @@
 package logica;
 
 import java.util.ArrayList;
+
 import simuladortransito.Transitable;
 
 /**
- *
  * @author marcos
  */
 public class Vehiculo implements Transitable {
-    
+
     private String patente;
     private TipoVehiculo tipoVehiculo;
     private ArrayList<TipoEtiqueta> listaEtiquetas;
@@ -59,20 +59,41 @@ public class Vehiculo implements Transitable {
 
     @Override
     public boolean esDiscapacitado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //TipoEtiqueta es abstract y polimorfica, hazlo correctamente
+
+        for (TipoEtiqueta etiqueta : listaEtiquetas) {
+            if (etiqueta instanceof TipoEtiquetaDiscapacitado) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean esElectrico() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        for (TipoEtiqueta etiqueta : listaEtiquetas) {
+            if (etiqueta instanceof TipoEtiquetaElectrico) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean esEmpleado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        for (TipoEtiqueta etiqueta : listaEtiquetas) {
+            if (etiqueta instanceof TipoEtiquetaEmpleo) {
+                return true;
+            }
+        }
+        return false;
     }
-    
-    
-   
-    
+
+
+    @Override
+    public String toString() {
+        return patente + ", tipoVehiculo=" + tipoVehiculo + ", listaEtiquetas=" + listaEtiquetas + ", propietario=" + propietario;
+    }
 }

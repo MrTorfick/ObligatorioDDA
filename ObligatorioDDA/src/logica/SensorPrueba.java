@@ -9,20 +9,26 @@ import simuladortransito.Sensor;
 import simuladortransito.Transitable;
 
 /**
- *
  * @author marcos
  */
 public class SensorPrueba implements Sensor {
 
+
     @Override
     public void ingreso(Transitable transitable, Estacionable estacionable) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Vehiculo v = (Vehiculo) transitable;
+        Cochera c = (Cochera) estacionable;
+        c.IngresoVehiculo(v);
     }
 
     @Override
     public void egreso(Transitable transitable, Estacionable estacionable) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Vehiculo v = (Vehiculo) transitable;
+        Cochera c = (Cochera) estacionable;
+        c.EgresoVehiculo(v);
+        c.setEstado(false);
+
     }
-    
-    
+
+
 }

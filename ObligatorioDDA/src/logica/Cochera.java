@@ -5,10 +5,11 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Date;
+
 import simuladortransito.Estacionable;
 
 /**
- *
  * @author marcos
  */
 public class Cochera implements Estacionable {
@@ -16,6 +17,7 @@ public class Cochera implements Estacionable {
     private int id;
     private static int ultimoId = 0;
     private boolean estado;
+    private ArrayList<Estadia> listaEstadias = new ArrayList();
     private ArrayList<TipoEtiqueta> listaEtiquetas;
 
     public Cochera(boolean estado, ArrayList<TipoEtiqueta> listaEtiquetas) {
@@ -24,6 +26,15 @@ public class Cochera implements Estacionable {
         this.estado = estado;
         this.listaEtiquetas = listaEtiquetas;
 
+    }
+
+
+    public ArrayList<Estadia> getListaEstadias() {
+        return listaEstadias;
+    }
+
+    public void setListaEstadias(ArrayList<Estadia> listaEstadias) {
+        this.listaEstadias = listaEstadias;
     }
 
     public int getId() {
@@ -60,25 +71,56 @@ public class Cochera implements Estacionable {
 
     @Override
     public String getCodigo() {
-       return getCodigo();
+        return "C" + id;
     }
 
     @Override
     public boolean esDiscapacitado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        for (TipoEtiqueta tipoEtiqueta : listaEtiquetas) {
+            if (tipoEtiqueta instanceof TipoEtiquetaDiscapacitado) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean esElectrico() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        for (TipoEtiqueta tipoEtiqueta : listaEtiquetas) {
+            if (tipoEtiqueta instanceof TipoEtiquetaElectrico) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean esEmpleado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    
-    
 
+        for (TipoEtiqueta tipoEtiqueta : listaEtiquetas) {
+            if (tipoEtiqueta instanceof TipoEtiquetaEmpleo) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    @Override
+    public String toString() {
+        return "id=" + id + ", estado=" + estado + ", listaEtiquetas=" + listaEtiquetas;
+    }
+
+    public void IngresoVehiculo(Vehiculo v) {
+        Estadia e = new Estadia(new Date(), null, this, null, v, null);
+        listaEstadias.add(e);
+        setEstado(true);
+        System.out.println("Se ingreso nuevo vehiculo");
+    }
+
+    public void EgresoVehiculo(Vehiculo v) {
+        System.out.println("Salio el vehiculo");
+    }
 }

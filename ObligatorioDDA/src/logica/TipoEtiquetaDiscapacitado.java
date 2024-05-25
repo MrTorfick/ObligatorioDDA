@@ -5,13 +5,18 @@
 package logica;
 
 /**
- *
  * @author marcos
  */
-public class TipoEtiquetaDiscapacitado extends TipoEtiqueta{
+public class TipoEtiquetaDiscapacitado extends TipoEtiqueta {
+
+    public TipoEtiquetaDiscapacitado() {
+        this.setNombre("Discapacitado");
+    }
 
     @Override
     public double calcularMulta() {
         return 0;
     }
+
+
 }

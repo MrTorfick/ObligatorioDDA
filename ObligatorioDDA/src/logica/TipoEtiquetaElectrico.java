@@ -10,6 +10,10 @@ package logica;
  */
 public class TipoEtiquetaElectrico extends TipoEtiqueta {
 
+    public TipoEtiquetaElectrico() {
+        this.setNombre("Electrico");
+    }
+
     @Override
     public double calcularMulta() {
         return 0;
