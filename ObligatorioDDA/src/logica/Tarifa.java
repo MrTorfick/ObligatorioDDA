@@ -18,7 +18,7 @@ public class Tarifa {
         this.tipoVehiculo = tipoVehiculo;
     }
 
-    public double getCostoFinal() {
+    public double getCosto() {
         return costo;
     }
 

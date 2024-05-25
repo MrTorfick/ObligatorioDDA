@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
  * @author marcos
  */
 public class Estadia {
@@ -76,7 +75,14 @@ public class Estadia {
     public void setMultas(ArrayList<Multa> multas) {
         this.multas = multas;
     }
-    
-    
+
+    public double calcularMonto() {
+        this.fechaSalida = new Date();
+        double tiempo = fechaSalida.getTime() - fechaEntrada.getTime();
+        double segundos = tiempo / 1000;
+        return cochera.getParking().obtenerCostoPorTipoDeVehiculo(vehiculo.getTipoVehiculo()) * segundos;
+
+    }
+
 
 }

@@ -23,6 +23,11 @@ public class Parking {
         this.listaCocheras = listaCocheras;
     }
 
+    public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas) {
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.listaTarifas = listaTarifas;
+    }
 
     public String getNombre() {
         return nombre;
@@ -55,6 +60,15 @@ public class Parking {
 
     public void setListaCocheras(ArrayList<Cochera> listaCocheras) {
         this.listaCocheras = listaCocheras;
+    }
+
+    public double obtenerCostoPorTipoDeVehiculo(TipoVehiculo tipoVehiculo) {
+        for (Tarifa tarifa : listaTarifas) {
+            if (tarifa.getTipoVehiculo().equals(tipoVehiculo)) {
+                return tarifa.getCosto();
+            }
+        }
+        return 0;
     }
 
 

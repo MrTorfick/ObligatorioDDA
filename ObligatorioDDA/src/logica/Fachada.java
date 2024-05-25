@@ -27,6 +27,10 @@ public class Fachada {
         sParking.agregarParking(nombre, direccion, listaTarifa, listaCocheras);
     }
 
+    public void agregarParking(Parking parking) {
+        sParking.agregarParking(parking);
+    }
+
     public ArrayList<Parking> getListaParkings() {
         return sParking.getListaParkings();
     }

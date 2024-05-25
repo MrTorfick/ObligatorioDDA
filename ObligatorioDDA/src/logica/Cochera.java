@@ -19,15 +19,24 @@ public class Cochera implements Estacionable {
     private boolean estado;
     private ArrayList<Estadia> listaEstadias = new ArrayList();
     private ArrayList<TipoEtiqueta> listaEtiquetas;
+    private Parking parking;
 
-    public Cochera(boolean estado, ArrayList<TipoEtiqueta> listaEtiquetas) {
+    public Cochera(boolean estado, ArrayList<TipoEtiqueta> listaEtiquetas, Parking parking) {
         id = ultimoId;
         ultimoId++;
         this.estado = estado;
         this.listaEtiquetas = listaEtiquetas;
+        this.parking = parking;
 
     }
 
+    public Parking getParking() {
+        return parking;
+    }
+
+    public void setParking(Parking parking) {
+        this.parking = parking;
+    }
 
     public ArrayList<Estadia> getListaEstadias() {
         return listaEstadias;
@@ -121,6 +130,13 @@ public class Cochera implements Estacionable {
     }
 
     public void EgresoVehiculo(Vehiculo v) {
-        System.out.println("Salio el vehiculo");
+        double costo = 0;
+        for (Estadia estadia : listaEstadias) {
+            if (estadia.getVehiculo().equals(v)) {
+                costo = estadia.calcularMonto();
+                setEstado(false);
+            }
+        }
+        System.out.println("Salio el vehiculo" + "costo total: " + costo);
     }
 }

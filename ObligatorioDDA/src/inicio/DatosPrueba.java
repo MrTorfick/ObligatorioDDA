@@ -20,7 +20,7 @@ public class DatosPrueba {
 
     public static void cargar() {
 
-
+        /*
         // Crear una lista de tarifas
         ArrayList<Tarifa> listaTarifas = new ArrayList<>();
         for (int i = 0; i < 5; i++) { // Puedes ajustar el valor 5 según la cantidad de tarifas que desees
@@ -41,6 +41,8 @@ public class DatosPrueba {
             String direccionParking = "DireccionParking" + (i + 1);
             fachada.agregarParking(nombreParking, direccionParking, listaTarifas, listaCocheras);
         }
+
+         */
 
     }
 
@@ -106,13 +108,29 @@ public class DatosPrueba {
     public static ArrayList<Estacionable> getCocheras(int cuantos) {
         ArrayList<Estacionable> lista = new ArrayList();
         ArrayList<TipoEtiqueta> listaEtiquetas = new ArrayList();
+        ArrayList<Tarifa> listaTarifas = new ArrayList<>();
+
         listaEtiquetas.add(new TipoEtiquetaEmpleo());
         listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
         listaEtiquetas.add(new TipoEtiquetaElectrico());
-        lista.add(new Cochera(false, listaEtiquetas));
-        lista.add(new Cochera(false, listaEtiquetas));
-        lista.add(new Cochera(false, listaEtiquetas));
 
+
+        listaTarifas.add(new Tarifa(120, new TipoVehiculo("Carga", 120)));
+
+        Parking p = new Parking("Parking1", "Direccion1", listaTarifas);
+
+        lista.add(new Cochera(false, listaEtiquetas, p));
+        lista.add(new Cochera(false, listaEtiquetas, p));
+        lista.add(new Cochera(false, listaEtiquetas, p));
+
+        // Casting de Estacionable a Cochera
+        ArrayList<Cochera> listaCocheras = new ArrayList<>();
+        for (Estacionable estacionable : lista) {
+            listaCocheras.add((Cochera) estacionable);
+        }
+        p.setListaCocheras(listaCocheras);
+
+        fachada.agregarParking(p);
         return lista;
 
     }
