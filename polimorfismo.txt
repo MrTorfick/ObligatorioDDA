@@ -1,0 +1,3 @@
+Ejemplo caso polimorfico:
+
+En base a un mismo problema, lo resuelvo de 3 formas diferentes
