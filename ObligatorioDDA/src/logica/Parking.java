@@ -15,18 +15,25 @@ public class Parking {
     private String direccion;
     private ArrayList<Tarifa> listaTarifas;
     private ArrayList<Cochera> listaCocheras;
+    private Tendencia tendenciaActual;
+    private double factorDemanda;
+
 
     public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas, ArrayList<Cochera> listaCocheras) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.listaTarifas = listaTarifas;
         this.listaCocheras = listaCocheras;
+        this.tendenciaActual = new TendenciaEstable();
+        this.factorDemanda = 1;
     }
 
     public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.listaTarifas = listaTarifas;
+        this.tendenciaActual = new TendenciaEstable();
+        this.factorDemanda = 1;
     }
 
     public String getNombre() {
@@ -71,5 +78,49 @@ public class Parking {
         return 0;
     }
 
+    public int obtenerCantidadDeIngresosEnCocherasEnLosUltimos10Segundos() {
+        int cantidad = 0;
+        for (Cochera cochera : listaCocheras) {
+            cantidad += cochera.obtenerCantidadDeIngresosEnLosUltimos10Segundos();
+        }
+        return cantidad;
+    }
+
+    public int obtenerCantidadDeEgresosEnCocherasEnLosUltimos10Segundos() {
+        int cantidad = 0;
+        for (Cochera cochera : listaCocheras) {
+            cantidad += cochera.obtenerCantidadDeEgresosEnLosUltimos10Segundos();
+        }
+        return cantidad;
+    }
+
+    public int cantidadCocherasOcupadas() {
+        int cantidad = 0;
+        for (Cochera cochera : listaCocheras) {
+            if (cochera.isEstado()) {
+                cantidad++;
+            }
+        }
+        return cantidad;
+    }
+
+
+    public void actualizarTendencia() {
+        int ingresos = obtenerCantidadDeIngresosEnCocherasEnLosUltimos10Segundos();
+        int egresos = obtenerCantidadDeEgresosEnCocherasEnLosUltimos10Segundos();
+        int valorAbsoluto = Math.abs(ingresos - egresos);
+
+        if (valorAbsoluto < listaCocheras.size() * 0.10) {
+            tendenciaActual = new TendenciaEstable();
+            factorDemanda = tendenciaActual.calcularFactorDemanda(factorDemanda, listaCocheras.size(), cantidadCocherasOcupadas());
+        } else if (ingresos - egresos > 0) {
+            tendenciaActual = new TendenciaPositiva();
+            factorDemanda = tendenciaActual.calcularFactorDemanda(factorDemanda, listaCocheras.size(), cantidadCocherasOcupadas());
+        } else if (ingresos - egresos < 0 && ingresos - egresos < listaCocheras.size() * 0.10) {
+            tendenciaActual = new TendenciaNegativa();
+            factorDemanda = tendenciaActual.calcularFactorDemanda(factorDemanda, listaCocheras.size(), cantidadCocherasOcupadas());
+        }
+
+    }
 
 }

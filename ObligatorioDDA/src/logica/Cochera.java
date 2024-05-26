@@ -122,10 +122,22 @@ public class Cochera implements Estacionable {
         return "id=" + id + ", estado=" + estado + ", listaEtiquetas=" + listaEtiquetas;
     }
 
+
+    public int obtenerCantidadDeIngresosEnLosUltimos10Segundos() {
+        int cantidad = 0;
+        for (Estadia estadia : listaEstadias) {
+            if (estadia.getFechaEntrada().getTime() >= new Date().getTime() - 10000) {
+                cantidad++;
+            }
+        }
+        return cantidad;
+    }
+
     public void IngresoVehiculo(Vehiculo v) {
         Estadia e = new Estadia(new Date(), null, this, null, v, null);
         listaEstadias.add(e);
         setEstado(true);
+        parking.actualizarTendencia();
         System.out.println("Se ingreso nuevo vehiculo");
     }
 
@@ -137,6 +149,18 @@ public class Cochera implements Estacionable {
                 setEstado(false);
             }
         }
+        parking.actualizarTendencia();
         System.out.println("Salio el vehiculo" + "costo total: " + costo);
+    }
+
+    public int obtenerCantidadDeEgresosEnLosUltimos10Segundos() {
+
+        int cantidad = 0;
+        for (Estadia estadia : listaEstadias) {
+            if (estadia.getFechaSalida().getTime() >= new Date().getTime() - 10000) {
+                cantidad++;
+            }
+        }
+        return cantidad;
     }
 }
