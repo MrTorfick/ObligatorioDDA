@@ -112,12 +112,15 @@ public class Parking {
 
         if (valorAbsoluto < listaCocheras.size() * 0.10) {
             tendenciaActual = new TendenciaEstable();
+            System.out.println("Tendencia estable");
             factorDemanda = tendenciaActual.calcularFactorDemanda(factorDemanda, listaCocheras.size(), cantidadCocherasOcupadas());
         } else if (ingresos - egresos > 0) {
             tendenciaActual = new TendenciaPositiva();
+            System.out.println("Tendencia positiva");
             factorDemanda = tendenciaActual.calcularFactorDemanda(factorDemanda, listaCocheras.size(), cantidadCocherasOcupadas());
         } else if (ingresos - egresos < 0 && ingresos - egresos < listaCocheras.size() * 0.10) {
             tendenciaActual = new TendenciaNegativa();
+            System.out.println("Tendencia negativa");
             factorDemanda = tendenciaActual.calcularFactorDemanda(factorDemanda, listaCocheras.size(), cantidadCocherasOcupadas());
         }
 

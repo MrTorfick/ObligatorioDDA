@@ -7,8 +7,7 @@ package SimuladorIU;
 import java.util.ArrayList;
 
 import inicio.DatosPrueba;
-import logica.Parking;
-import logica.SensorPrueba;
+import logica.SensorParking;
 import simuladortransito.Estacionable;
 import simuladortransito.Transitable;
 import simuladorIU.SimuladorIU;
@@ -20,7 +19,7 @@ import simuladorIU.SimuladorIU;
 public class IniciarSimuladorIU {
 
     public static void main(String[] args) {
-        SensorPrueba sensor = new SensorPrueba();
+        SensorParking sensor = new SensorParking();
 
 
         ArrayList<Estacionable> cocheras = DatosPrueba.getCocheras(50);

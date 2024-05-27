@@ -147,6 +147,8 @@ public class Cochera implements Estacionable {
             if (estadia.getVehiculo().equals(v)) {
                 costo = estadia.calcularMonto();
                 setEstado(false);
+                estadia.setFechaSalida(new Date());
+                break;
             }
         }
         parking.actualizarTendencia();
@@ -157,7 +159,7 @@ public class Cochera implements Estacionable {
 
         int cantidad = 0;
         for (Estadia estadia : listaEstadias) {
-            if (estadia.getFechaSalida().getTime() >= new Date().getTime() - 10000) {
+            if (estadia.getFechaSalida() != null && estadia.getFechaSalida().getTime() >= new Date().getTime() - 10000) {
                 cantidad++;
             }
         }

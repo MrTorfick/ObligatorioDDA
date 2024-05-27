@@ -11,14 +11,14 @@ import simuladortransito.Transitable;
 /**
  * @author marcos
  */
-public class SensorPrueba implements Sensor {
-
+public class SensorParking implements Sensor {
 
     @Override
     public void ingreso(Transitable transitable, Estacionable estacionable) {
         Vehiculo v = (Vehiculo) transitable;
         Cochera c = (Cochera) estacionable;
         c.IngresoVehiculo(v);
+        c.setEstado(true);
     }
 
     @Override
@@ -29,6 +29,5 @@ public class SensorPrueba implements Sensor {
         c.setEstado(false);
 
     }
-
 
 }

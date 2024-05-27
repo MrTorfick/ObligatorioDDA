@@ -28,6 +28,7 @@ public class Estadia {
         this.multas = multas;
     }
 
+
     public Date getFechaEntrada() {
         return fechaEntrada;
     }
