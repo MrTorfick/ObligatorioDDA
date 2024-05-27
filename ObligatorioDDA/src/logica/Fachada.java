@@ -5,6 +5,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @author marcos
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class Fachada {
 
     private SistemaParking sParking = new SistemaParking();
+    private SistemaAnomalia sAnomalia = new SistemaAnomalia();
 
     private static Fachada instancia = new Fachada();
 
@@ -23,6 +25,12 @@ public class Fachada {
 
     }
 
+    public void agregarAnomalia(Estadia e, Date fecha, Anomalia.codigoError error) {
+        sAnomalia.agregarAnomalia(e, fecha, error);
+    }
+
+        
+    
     public void agregarParking(String nombre, String direccion, ArrayList<Tarifa> listaTarifa, ArrayList<Cochera> listaCocheras) {
         sParking.agregarParking(nombre, direccion, listaTarifa, listaCocheras);
     }

@@ -28,7 +28,6 @@ public class Estadia {
         this.multas = multas;
     }
 
-
     public Date getFechaEntrada() {
         return fechaEntrada;
     }
@@ -84,6 +83,5 @@ public class Estadia {
         return cochera.getParking().obtenerCostoPorTipoDeVehiculo(vehiculo.getTipoVehiculo()) * segundos;
 
     }
-
 
 }

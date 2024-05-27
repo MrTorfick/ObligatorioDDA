@@ -18,7 +18,6 @@ public class SensorParking implements Sensor {
         Vehiculo v = (Vehiculo) transitable;
         Cochera c = (Cochera) estacionable;
         c.IngresoVehiculo(v);
-        c.setEstado(true);
     }
 
     @Override
@@ -26,7 +25,6 @@ public class SensorParking implements Sensor {
         Vehiculo v = (Vehiculo) transitable;
         Cochera c = (Cochera) estacionable;
         c.EgresoVehiculo(v);
-        c.setEstado(false);
 
     }
 

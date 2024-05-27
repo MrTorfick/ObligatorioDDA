@@ -116,29 +116,37 @@ public class Cochera implements Estacionable {
         return false;
     }
 
-
     @Override
     public String toString() {
         return "id=" + id + ", estado=" + estado + ", listaEtiquetas=" + listaEtiquetas;
     }
 
-
     public int obtenerCantidadDeIngresosEnLosUltimos10Segundos() {
         int cantidad = 0;
         for (Estadia estadia : listaEstadias) {
-            if (estadia.getFechaEntrada().getTime() >= new Date().getTime() - 10000) {
+            if (estadia.getFechaEntrada() != null && estadia.getFechaEntrada().getTime() >= new Date().getTime() - 10000) {
                 cantidad++;
             }
         }
         return cantidad;
     }
 
+    private void verificarHoudini() {
+        if (this.estado) {
+            Estadia e = new Estadia(null, null, this, null, listaEstadias.get(listaEstadias.size() - 1).getVehiculo(), null);
+            listaEstadias.add(e);
+            Fachada.getInstancia().agregarAnomalia(e, new Date(), Anomalia.codigoError.Houdini);
+            System.out.println("Hubo houdini");
+        }
+    }
+
     public void IngresoVehiculo(Vehiculo v) {
+        verificarHoudini();
         Estadia e = new Estadia(new Date(), null, this, null, v, null);
         listaEstadias.add(e);
-        setEstado(true);
         parking.actualizarTendencia();
         System.out.println("Se ingreso nuevo vehiculo");
+        setEstado(true);
     }
 
     public void EgresoVehiculo(Vehiculo v) {
@@ -153,6 +161,7 @@ public class Cochera implements Estacionable {
         }
         parking.actualizarTendencia();
         System.out.println("Salio el vehiculo" + "costo total: " + costo);
+        setEstado(false);
     }
 
     public int obtenerCantidadDeEgresosEnLosUltimos10Segundos() {

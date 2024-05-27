@@ -18,7 +18,6 @@ public class Parking {
     private Tendencia tendenciaActual;
     private double factorDemanda;
 
-
     public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas, ArrayList<Cochera> listaCocheras) {
         this.nombre = nombre;
         this.direccion = direccion;
@@ -59,7 +58,6 @@ public class Parking {
     public void setListaTarifas(ArrayList<Tarifa> listaTarifas) {
         this.listaTarifas = listaTarifas;
     }
-
 
     public ArrayList<Cochera> getListaCocheras() {
         return listaCocheras;
@@ -103,7 +101,6 @@ public class Parking {
         }
         return cantidad;
     }
-
 
     public void actualizarTendencia() {
         int ingresos = obtenerCantidadDeIngresosEnCocherasEnLosUltimos10Segundos();
