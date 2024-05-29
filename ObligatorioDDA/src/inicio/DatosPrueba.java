@@ -61,7 +61,7 @@ public class DatosPrueba {
             ArrayList<TipoEtiqueta> posiblesEtiquetas = new ArrayList<>();
             posiblesEtiquetas.add(new TipoEtiquetaDiscapacitado());
             posiblesEtiquetas.add(new TipoEtiquetaElectrico());
-            posiblesEtiquetas.add(new TipoEtiquetaEmpleo());
+            posiblesEtiquetas.add(new TipoEtiquetaEmpleado());
 
             for (int x = 0; x < cuantos; x++) {
                 ArrayList<Vehiculo> vehiculosPropietario = new ArrayList<>();
@@ -94,8 +94,8 @@ public class DatosPrueba {
 
         ArrayList<Transitable> lista = new ArrayList();
         ArrayList<TipoEtiqueta> listaEtiquetas = new ArrayList();
-        listaEtiquetas.add(new TipoEtiquetaEmpleo());
-        listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
+        //listaEtiquetas.add(new TipoEtiquetaEmpleado());
+        //listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
         listaEtiquetas.add(new TipoEtiquetaElectrico());
         lista.add(new Vehiculo("V1", new TipoVehiculo("Carga"), listaEtiquetas, new Propietario("11111111111", "Propietario 1", null, 1000)));
         lista.add(new Vehiculo("V2", new TipoVehiculo("Carga"), listaEtiquetas, new Propietario("22222222222", "Propietario 2", null, 1000)));
@@ -110,9 +110,9 @@ public class DatosPrueba {
         ArrayList<TipoEtiqueta> listaEtiquetas = new ArrayList();
         ArrayList<Tarifa> listaTarifas = new ArrayList<>();
 
-        listaEtiquetas.add(new TipoEtiquetaEmpleo());
+        listaEtiquetas.add(new TipoEtiquetaEmpleado());
         listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
-        listaEtiquetas.add(new TipoEtiquetaElectrico());
+        //listaEtiquetas.add(new TipoEtiquetaElectrico());
 
 
         listaTarifas.add(new Tarifa(120, new TipoVehiculo("Carga", 120)));
@@ -144,7 +144,7 @@ public class DatosPrueba {
         ArrayList<TipoEtiqueta> posiblesEtiquetas = new ArrayList<>();
         posiblesEtiquetas.add(new TipoEtiquetaDiscapacitado());
         posiblesEtiquetas.add(new TipoEtiquetaElectrico());
-        posiblesEtiquetas.add(new TipoEtiquetaEmpleo());
+        posiblesEtiquetas.add(new TipoEtiquetaEmpleado());
 
         for (int x = 0; x < cuantos; x++) {
             // Generar etiquetas aleatorias

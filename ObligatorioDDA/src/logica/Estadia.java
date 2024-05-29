@@ -7,9 +7,6 @@ package logica;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * @author marcos
- */
 public class Estadia {
 
     private Date fechaEntrada;
@@ -18,6 +15,7 @@ public class Estadia {
     private Tarifa tarifa;
     private Vehiculo vehiculo;
     private ArrayList<Multa> multas;
+    private double costoFinal;
 
     public Estadia(Date fechaEntrada, Date fechaSalida, Cochera cochera, Tarifa tarifa, Vehiculo vehiculo, ArrayList<Multa> multas) {
         this.fechaEntrada = fechaEntrada;
@@ -26,6 +24,7 @@ public class Estadia {
         this.tarifa = tarifa;
         this.vehiculo = vehiculo;
         this.multas = multas;
+        this.costoFinal = 0;
     }
 
     public Date getFechaEntrada() {
@@ -79,9 +78,30 @@ public class Estadia {
     public double calcularMonto() {
         this.fechaSalida = new Date();
         double tiempo = fechaSalida.getTime() - fechaEntrada.getTime();
-        double segundos = tiempo / 1000;
-        return cochera.getParking().obtenerCostoPorTipoDeVehiculo(vehiculo.getTipoVehiculo()) * segundos;
+        double tiempoEstadia = tiempo / 1000;
+        double precioBaseVehiculo = cochera.obtenerCostoPorTipoVehiculo(vehiculo.getTipoVehiculo());
+        double totalMultas = verificarMultas(precioBaseVehiculo * tiempoEstadia, tiempoEstadia);
+        double totalSinDemanda = (precioBaseVehiculo * tiempoEstadia) + totalMultas;
+        if(totalMultas>0){
+            System.out.println("Genero multas");
+        }
+        System.out.println("Costo sin factor de demanda:" + totalSinDemanda);
+        return totalSinDemanda;
 
+        //return cochera.getParking().obtenerCostoPorTipoDeVehiculo(vehiculo.getTipoVehiculo()) * segundos;
+    }
+
+    private double verificarMultas(double valorEstadia, double tiempoEstadia) {
+
+        ArrayList<TipoEtiqueta> listaEtiquetasVehiculo = vehiculo.getListaEtiquetas();
+        double total = 0;
+        for (TipoEtiqueta tipoEtiqueta : listaEtiquetasVehiculo) {
+
+            if (!cochera.existeEtiqueta(tipoEtiqueta.getNombre())) {
+                total += tipoEtiqueta.calcularMulta(valorEstadia, tiempoEstadia);
+            }
+        }
+        return total;
     }
 
 }

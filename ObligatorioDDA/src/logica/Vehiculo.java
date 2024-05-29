@@ -84,7 +84,7 @@ public class Vehiculo implements Transitable {
     public boolean esEmpleado() {
 
         for (TipoEtiqueta etiqueta : listaEtiquetas) {
-            if (etiqueta instanceof TipoEtiquetaEmpleo) {
+            if (etiqueta instanceof TipoEtiquetaEmpleado) {
                 return true;
             }
         }

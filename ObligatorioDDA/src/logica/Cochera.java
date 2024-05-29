@@ -109,7 +109,17 @@ public class Cochera implements Estacionable {
     public boolean esEmpleado() {
 
         for (TipoEtiqueta tipoEtiqueta : listaEtiquetas) {
-            if (tipoEtiqueta instanceof TipoEtiquetaEmpleo) {
+            if (tipoEtiqueta instanceof TipoEtiquetaEmpleado) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean existeEtiqueta(String nombreEtiqueta) {
+
+        for (TipoEtiqueta tipoEtiqueta : listaEtiquetas) {
+            if (tipoEtiqueta.getNombre().equals(nombreEtiqueta)) {
                 return true;
             }
         }
@@ -173,5 +183,10 @@ public class Cochera implements Estacionable {
             }
         }
         return cantidad;
+    }
+    
+    public double obtenerCostoPorTipoVehiculo(TipoVehiculo v){
+    
+        return parking.obtenerCostoPorTipoDeVehiculo(v);
     }
 }

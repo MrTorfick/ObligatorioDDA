@@ -10,12 +10,14 @@ package logica;
 public class TipoEtiquetaDiscapacitado extends TipoEtiqueta {
 
     public TipoEtiquetaDiscapacitado() {
-        this.setNombre("Discapacitado");
+        super("Discapacitado");
     }
 
+
+
     @Override
-    public double calcularMulta() {
-        return 0;
+    public double calcularMulta(double valorEstadia, double tiempoEstadia) {
+        return 250;
     }
 
 

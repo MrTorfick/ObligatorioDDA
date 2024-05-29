@@ -11,6 +11,13 @@ public abstract class TipoEtiqueta {
 
     private String nombre;
 
+    public TipoEtiqueta(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
+    
+
     public String getNombre() {
         return nombre;
     }
@@ -23,7 +30,7 @@ public abstract class TipoEtiqueta {
         //TODO
     }
 
-    public abstract double calcularMulta();
+    public abstract double calcularMulta(double valorEstadia, double tiempoEstadia);
 
 
     @Override

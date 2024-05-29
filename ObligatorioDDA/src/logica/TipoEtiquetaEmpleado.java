@@ -7,14 +7,16 @@ package logica;
 /**
  * @author marcos
  */
-public class TipoEtiquetaEmpleo extends TipoEtiqueta {
+public class TipoEtiquetaEmpleado extends TipoEtiqueta {
 
-    public TipoEtiquetaEmpleo() {
-        this.setNombre("Empleo");
+    public TipoEtiquetaEmpleado() {
+        super("Empleado");
     }
 
     @Override
-    public double calcularMulta() {
-        return 0;
+    public double calcularMulta(double valorEstadia, double tiempoEstadia) {
+        return tiempoEstadia/10;
     }
+
+
 }
