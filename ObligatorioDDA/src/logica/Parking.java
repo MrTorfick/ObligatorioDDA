@@ -27,6 +27,7 @@ public class Parking {
         this.factorDemanda = 1;
     }
 
+    
     public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas) {
         this.nombre = nombre;
         this.direccion = direccion;
@@ -35,6 +36,23 @@ public class Parking {
         this.factorDemanda = 1;
     }
 
+    public Tendencia getTendenciaActual() {
+        return tendenciaActual;
+    }
+
+    public void setTendenciaActual(Tendencia tendenciaActual) {
+        this.tendenciaActual = tendenciaActual;
+    }
+
+    public double getFactorDemanda() {
+        return factorDemanda;
+    }
+
+    public void setFactorDemanda(double factorDemanda) {
+        this.factorDemanda = factorDemanda;
+    }
+
+    
     public String getNombre() {
         return nombre;
     }

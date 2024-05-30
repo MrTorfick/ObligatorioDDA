@@ -81,12 +81,12 @@ public class Estadia {
         double tiempoEstadia = tiempo / 1000;
         double precioBaseVehiculo = cochera.obtenerCostoPorTipoVehiculo(vehiculo.getTipoVehiculo());
         double totalMultas = verificarMultas(precioBaseVehiculo * tiempoEstadia, tiempoEstadia);
-        double totalSinDemanda = (precioBaseVehiculo * tiempoEstadia) + totalMultas;
-        if(totalMultas>0){
+        double total = (precioBaseVehiculo * tiempoEstadia * cochera.obtenerDemandaParking()) + totalMultas;
+        if (totalMultas > 0) {
             System.out.println("Genero multas");
         }
-        System.out.println("Costo sin factor de demanda:" + totalSinDemanda);
-        return totalSinDemanda;
+        System.out.println("Costo sin factor de demanda:" + total);
+        return total;
 
         //return cochera.getParking().obtenerCostoPorTipoDeVehiculo(vehiculo.getTipoVehiculo()) * segundos;
     }

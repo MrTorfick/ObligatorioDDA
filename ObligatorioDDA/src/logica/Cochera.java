@@ -189,4 +189,8 @@ public class Cochera implements Estacionable {
     
         return parking.obtenerCostoPorTipoDeVehiculo(v);
     }
+    
+    public double obtenerDemandaParking(){
+        return parking.getFactorDemanda();
+    }
 }
