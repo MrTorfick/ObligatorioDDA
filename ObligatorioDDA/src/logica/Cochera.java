@@ -6,13 +6,14 @@ package logica;
 
 import java.util.ArrayList;
 import java.util.Date;
+import observador.Observable;
 
 import simuladortransito.Estacionable;
 
 /**
  * @author marcos
  */
-public class Cochera implements Estacionable {
+public class Cochera extends Observable implements Estacionable {
 
     private int id;
     private static int ultimoId = 0;
@@ -145,6 +146,7 @@ public class Cochera implements Estacionable {
         if (this.estado) {
             Estadia e = new Estadia(null, null, this, null, listaEstadias.get(listaEstadias.size() - 1).getVehiculo(), null);
             listaEstadias.add(e);
+            Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaEstadias);
             Fachada.getInstancia().agregarAnomalia(e, new Date(), Anomalia.codigoError.Houdini);
             System.out.println("Hubo houdini");
         }
@@ -154,6 +156,7 @@ public class Cochera implements Estacionable {
         verificarHoudini();
         Estadia e = new Estadia(new Date(), null, this, null, v, null);
         listaEstadias.add(e);
+        Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaEstadias);
         parking.actualizarTendencia();
         System.out.println("Se ingreso nuevo vehiculo");
         setEstado(true);
@@ -184,13 +187,13 @@ public class Cochera implements Estacionable {
         }
         return cantidad;
     }
-    
-    public double obtenerCostoPorTipoVehiculo(TipoVehiculo v){
-    
+
+    public double obtenerCostoPorTipoVehiculo(TipoVehiculo v) {
+
         return parking.obtenerCostoPorTipoDeVehiculo(v);
     }
-    
-    public double obtenerDemandaParking(){
+
+    public double obtenerDemandaParking() {
         return parking.getFactorDemanda();
     }
 }

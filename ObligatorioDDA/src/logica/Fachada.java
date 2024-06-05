@@ -6,14 +6,17 @@ package logica;
 
 import java.util.ArrayList;
 import java.util.Date;
+import observador.Observable;
 
 /**
  * @author marcos
  */
-public class Fachada {
+public class Fachada extends Observable {
 
     private SistemaParking sParking = new SistemaParking();
     private SistemaAnomalia sAnomalia = new SistemaAnomalia();
+    
+    public enum Eventos{cambioListaEstadias}
 
     private static Fachada instancia = new Fachada();
 
@@ -25,6 +28,10 @@ public class Fachada {
 
     }
 
+    public double obtenerTotalEstadias() {
+        return sParking.obtenerTotalEstadias();
+    }
+        
     public void agregarAnomalia(Estadia e, Date fecha, Anomalia.codigoError error) {
         sAnomalia.agregarAnomalia(e, fecha, error);
     }

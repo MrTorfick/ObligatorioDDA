@@ -56,4 +56,10 @@ public class SistemaParking {
         }
         return cocheras;
     }
+    
+    //ObtenerTotalEstadias
+    
+    public double obtenerTotalEstadias(){
+        return 0;
+    }
 }

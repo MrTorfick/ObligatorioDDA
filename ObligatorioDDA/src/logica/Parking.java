@@ -5,6 +5,7 @@
 package logica;
 
 import java.util.ArrayList;
+import observador.Observable;
 
 /**
  * @author marcos
@@ -17,6 +18,7 @@ public class Parking {
     private ArrayList<Cochera> listaCocheras;
     private Tendencia tendenciaActual;
     private double factorDemanda;
+    
 
     public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas, ArrayList<Cochera> listaCocheras) {
         this.nombre = nombre;
