@@ -18,7 +18,6 @@ public class Parking {
     private ArrayList<Cochera> listaCocheras;
     private Tendencia tendenciaActual;
     private double factorDemanda;
-    
 
     public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas, ArrayList<Cochera> listaCocheras) {
         this.nombre = nombre;
@@ -29,7 +28,6 @@ public class Parking {
         this.factorDemanda = 1;
     }
 
-    
     public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas) {
         this.nombre = nombre;
         this.direccion = direccion;
@@ -54,7 +52,6 @@ public class Parking {
         this.factorDemanda = factorDemanda;
     }
 
-    
     public String getNombre() {
         return nombre;
     }
@@ -140,7 +137,24 @@ public class Parking {
             System.out.println("Tendencia negativa");
             factorDemanda = tendenciaActual.calcularFactorDemanda(factorDemanda, listaCocheras.size(), cantidadCocherasOcupadas());
         }
+    }
 
+    public double totalEstadias() {
+        double total = 0;
+
+        for (Cochera c : listaCocheras) {
+            total += c.totalEstadias();
+        }
+        return total;
+    }
+    
+    public double totalFacturado(){
+        double total=0;
+        
+        for(Cochera c:listaCocheras){
+            total+=c.totalFacturado();
+        }
+        return total;
     }
 
 }

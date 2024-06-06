@@ -10,7 +10,8 @@ package controlador;
  */
 public interface VistaPanel {
 
-    public void MostrarDatos();
+    public void MostrarTotalEstadias(double total);
+    public void mostrarTotalFacturado(double total);
     
     
 

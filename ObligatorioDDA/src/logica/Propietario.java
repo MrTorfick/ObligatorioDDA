@@ -56,6 +56,9 @@ public class Propietario {
         this.dineroActual = dineroActual;
     }
     
+    public void descontarSalario(double montoADescontar){
+        setDineroActual(getDineroActual()-montoADescontar);
+    }
     
     
     

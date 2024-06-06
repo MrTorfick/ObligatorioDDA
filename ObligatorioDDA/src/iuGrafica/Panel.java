@@ -16,12 +16,12 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     /**
      * Creates new form PanelDeControl
      */
-    
     private ControladorPanel controlador;
-    
-    
+
     public Panel() {
         initComponents();
+        setLocationRelativeTo(null);
+        controlador = new ControladorPanel(this);
     }
 
     /**
@@ -159,12 +159,12 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(totalEstadias, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(totalFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(totalFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
@@ -198,7 +198,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        new ListaPrecios(this).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -208,7 +208,6 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     /**
      * @param args the command line arguments
      */
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -257,8 +256,17 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     private javax.swing.JLabel totalFacturacion;
     // End of variables declaration//GEN-END:variables
 
+
+
     @Override
-    public void MostrarDatos() {
-        
+    public void MostrarTotalEstadias(double t) {
+        String total=t+"";
+        totalEstadias.setText(total);
+    }
+
+    @Override
+    public void mostrarTotalFacturado(double t) {
+        String total=t+"";
+        totalFacturacion.setText(total);
     }
 }

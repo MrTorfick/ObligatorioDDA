@@ -4,6 +4,13 @@
  */
 package inicio;
 
+import iuGrafica.Panel;
+import java.util.ArrayList;
+import logica.SensorParking;
+import simuladorIU.SimuladorIU;
+import simuladortransito.Estacionable;
+import simuladortransito.Transitable;
+
 /**
  * @author marcos
  */
@@ -15,7 +22,15 @@ public class main {
     public static void main(String[] args) {
 
         //DatosPrueba d = new DatosPrueba();
+        SensorParking sensor = new SensorParking();
         DatosPrueba.cargar();
+        
+        ArrayList<Estacionable> cocheras = DatosPrueba.getCocheras(50);
+        ArrayList<Transitable> vehiculos = DatosPrueba.getVehiculos(50);
+        new SimuladorIU(null, false, sensor, cocheras, vehiculos).setVisible(true);
+        new Panel().setVisible(true);
+        
+        
     }
 
 }

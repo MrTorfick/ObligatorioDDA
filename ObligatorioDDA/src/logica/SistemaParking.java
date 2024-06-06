@@ -57,9 +57,21 @@ public class SistemaParking {
         return cocheras;
     }
     
-    //ObtenerTotalEstadias
-    
+   
     public double obtenerTotalEstadias(){
-        return 0;
+        double total=0;
+        for(Parking p :listaParkings){
+            total+=p.totalEstadias();
+        }
+        return total;
+    }
+    
+    public double obtenerTotalFacturado(){
+        double total=0;
+        
+        for(Parking p:listaParkings){
+            total+=p.totalFacturado();
+        }
+        return total;
     }
 }

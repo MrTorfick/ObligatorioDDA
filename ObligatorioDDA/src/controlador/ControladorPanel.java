@@ -25,13 +25,20 @@ public class ControladorPanel implements Observador {
 
     @Override
     public void actualizar(Object evento, Observable origen) {
-        if(evento.equals(Fachada.Eventos.cambioListaEstadias)){
+        System.out.println(origen);
+        if (evento.equals(Fachada.Eventos.cambioListaEstadias)) {
             actualizarContadorEstadias();
+        }else if(evento.equals(Fachada.Eventos.cambioTotalFacturado)){
+            actualizarTotalFacturado();
         }
     }
 
     private void actualizarContadorEstadias() {
-        vista.MostrarDatos();//Pasar datos por parametro
+        vista.MostrarTotalEstadias(Fachada.getInstancia().obtenerTotalEstadias());
+    }
+
+    private void actualizarTotalFacturado() {
+        vista.mostrarTotalFacturado(Fachada.getInstancia().obtenerTotalFacturado());
     }
 
 }

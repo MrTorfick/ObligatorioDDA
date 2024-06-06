@@ -148,7 +148,22 @@ public class Cochera extends Observable implements Estacionable {
             listaEstadias.add(e);
             Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaEstadias);
             Fachada.getInstancia().agregarAnomalia(e, new Date(), Anomalia.codigoError.Houdini);
-            System.out.println("Hubo houdini");
+        }
+    }
+
+    private void VerificarAnomaliaEgreso(Vehiculo v) {
+        if (!this.estado) {
+            Estadia e = new Estadia(new Date(), new Date(), this, null, null, null);
+            listaEstadias.add(e);
+            Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaEstadias);
+            Fachada.getInstancia().agregarAnomalia(e, new Date(), Anomalia.codigoError.Mystery);
+        } else {
+            if (!v.getPatente().equals(listaEstadias.get(listaEstadias.size() - 1).getVehiculo().getPatente())) {
+                Estadia e1 = listaEstadias.get(listaEstadias.size() - 1);
+                Fachada.getInstancia().agregarAnomalia(e1, new Date(), Anomalia.codigoError.Transportador1);
+                Estadia e2 = new Estadia(new Date(), new Date(), this, null, v, null);
+                Fachada.getInstancia().agregarAnomalia(e2, new Date(), Anomalia.codigoError.Transportador2);
+            }
         }
     }
 
@@ -158,17 +173,20 @@ public class Cochera extends Observable implements Estacionable {
         listaEstadias.add(e);
         Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaEstadias);
         parking.actualizarTendencia();
-        System.out.println("Se ingreso nuevo vehiculo");
         setEstado(true);
     }
 
     public void EgresoVehiculo(Vehiculo v) {
+        VerificarAnomaliaEgreso(v);
         double costo = 0;
         for (Estadia estadia : listaEstadias) {
             if (estadia.getVehiculo().equals(v)) {
                 costo = estadia.calcularMonto();
                 setEstado(false);
                 estadia.setFechaSalida(new Date());
+                estadia.descontarSalarioPropietario(costo);
+                estadia.setCostoFinal(costo);
+                Fachada.getInstancia().avisar(Fachada.Eventos.cambioTotalFacturado);
                 break;
             }
         }
@@ -196,4 +214,18 @@ public class Cochera extends Observable implements Estacionable {
     public double obtenerDemandaParking() {
         return parking.getFactorDemanda();
     }
+
+    public double totalEstadias() {
+        return getListaEstadias().size();
+    }
+    
+    public double totalFacturado(){
+        double total=0;
+        
+        for(Estadia c:listaEstadias){
+            total+=c.getCostoFinal();
+        }
+        return total;
+    }
+
 }

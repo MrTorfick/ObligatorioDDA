@@ -96,4 +96,5 @@ public class Vehiculo implements Transitable {
     public String toString() {
         return patente + ", tipoVehiculo=" + tipoVehiculo + ", listaEtiquetas=" + listaEtiquetas + ", propietario=" + propietario;
     }
+    
 }

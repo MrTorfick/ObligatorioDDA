@@ -75,6 +75,16 @@ public class Estadia {
         this.multas = multas;
     }
 
+    public double getCostoFinal() {
+        return costoFinal;
+    }
+
+    public void setCostoFinal(double costoFinal) {
+        this.costoFinal = costoFinal;
+    }
+    
+    
+
     public double calcularMonto() {
         this.fechaSalida = new Date();
         double tiempo = fechaSalida.getTime() - fechaEntrada.getTime();
@@ -82,13 +92,10 @@ public class Estadia {
         double precioBaseVehiculo = cochera.obtenerCostoPorTipoVehiculo(vehiculo.getTipoVehiculo());
         double totalMultas = verificarMultas(precioBaseVehiculo * tiempoEstadia, tiempoEstadia);
         double total = (precioBaseVehiculo * tiempoEstadia * cochera.obtenerDemandaParking()) + totalMultas;
-        if (totalMultas > 0) {
-            System.out.println("Genero multas");
-        }
-        System.out.println("Costo sin factor de demanda:" + total);
+        System.out.println("Costo total estadia: " + total);
+        
         return total;
 
-        //return cochera.getParking().obtenerCostoPorTipoDeVehiculo(vehiculo.getTipoVehiculo()) * segundos;
     }
 
     private double verificarMultas(double valorEstadia, double tiempoEstadia) {
@@ -102,6 +109,10 @@ public class Estadia {
             }
         }
         return total;
+    }
+
+    public void descontarSalarioPropietario(double costo) {
+        vehiculo.getPropietario().descontarSalario(costo);
     }
 
 }
