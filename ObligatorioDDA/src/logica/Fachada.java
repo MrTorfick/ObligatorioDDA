@@ -15,8 +15,10 @@ public class Fachada extends Observable {
 
     private SistemaParking sParking = new SistemaParking();
     private SistemaAnomalia sAnomalia = new SistemaAnomalia();
-    
-    public enum Eventos{cambioListaEstadias, cambioTotalFacturado}
+
+    public enum Eventos {
+        cambioListaEstadias, cambioTotalFacturado, cambioEstadoParking
+    }
 
     private static Fachada instancia = new Fachada();
 
@@ -31,13 +33,11 @@ public class Fachada extends Observable {
     public double obtenerTotalEstadias() {
         return sParking.obtenerTotalEstadias();
     }
-        
+
     public void agregarAnomalia(Estadia e, Date fecha, Anomalia.codigoError error) {
         sAnomalia.agregarAnomalia(e, fecha, error);
     }
 
-        
-    
     public void agregarParking(String nombre, String direccion, ArrayList<Tarifa> listaTarifa, ArrayList<Cochera> listaCocheras) {
         sParking.agregarParking(nombre, direccion, listaTarifa, listaCocheras);
     }
@@ -57,9 +57,5 @@ public class Fachada extends Observable {
     public double obtenerTotalFacturado() {
         return sParking.obtenerTotalFacturado();
     }
-    
-    
-    
-    
-    
+
 }

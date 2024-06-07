@@ -5,6 +5,7 @@
 package logica;
 
 import java.util.ArrayList;
+import observador.Observable;
 
 /**
  * @author marcos
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class SistemaParking {
 
     ArrayList<Parking> listaParkings = new ArrayList();
-
+    
 
     public void agregarParking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas, ArrayList<Cochera> listaCocheras) {
 
@@ -74,4 +75,6 @@ public class SistemaParking {
         }
         return total;
     }
+    
+    
 }

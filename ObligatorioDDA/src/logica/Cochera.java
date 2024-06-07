@@ -169,11 +169,12 @@ public class Cochera extends Observable implements Estacionable {
 
     public void IngresoVehiculo(Vehiculo v) {
         verificarHoudini();
-        Estadia e = new Estadia(new Date(), null, this, null, v, null);
+        ArrayList<Multa> m = new ArrayList();
+        Estadia e = new Estadia(new Date(), null, this, null, v, m);
         listaEstadias.add(e);
-        Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaEstadias);
-        parking.actualizarTendencia();
         setEstado(true);
+        parking.actualizarTendencia();
+       Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaEstadias);
     }
 
     public void EgresoVehiculo(Vehiculo v) {
@@ -218,12 +219,21 @@ public class Cochera extends Observable implements Estacionable {
     public double totalEstadias() {
         return getListaEstadias().size();
     }
-    
-    public double totalFacturado(){
-        double total=0;
-        
-        for(Estadia c:listaEstadias){
-            total+=c.getCostoFinal();
+
+    public double totalFacturado() {
+        double total = 0;
+
+        for (Estadia c : listaEstadias) {
+            total += c.getCostoFinal();
+        }
+        return total;
+    }
+
+    public double totalFacturadoPorMultas() {
+        double total = 0;
+
+        for (Estadia c : listaEstadias) {
+            total += c.totalMultas();
         }
         return total;
     }

@@ -82,8 +82,6 @@ public class Estadia {
     public void setCostoFinal(double costoFinal) {
         this.costoFinal = costoFinal;
     }
-    
-    
 
     public double calcularMonto() {
         this.fechaSalida = new Date();
@@ -93,7 +91,7 @@ public class Estadia {
         double totalMultas = verificarMultas(precioBaseVehiculo * tiempoEstadia, tiempoEstadia);
         double total = (precioBaseVehiculo * tiempoEstadia * cochera.obtenerDemandaParking()) + totalMultas;
         System.out.println("Costo total estadia: " + total);
-        
+
         return total;
 
     }
@@ -105,14 +103,29 @@ public class Estadia {
         for (TipoEtiqueta tipoEtiqueta : listaEtiquetasVehiculo) {
 
             if (!cochera.existeEtiqueta(tipoEtiqueta.getNombre())) {
-                total += tipoEtiqueta.calcularMulta(valorEstadia, tiempoEstadia);
+                Multa m = new Multa(tipoEtiqueta.calcularMulta(valorEstadia, tiempoEstadia));
+                total += m.getCosto();
+                multas.add(m);
             }
         }
+        Fachada.getInstancia().avisar(Fachada.Eventos.cambioEstadoParking);
         return total;
     }
 
     public void descontarSalarioPropietario(double costo) {
         vehiculo.getPropietario().descontarSalario(costo);
+    }
+
+    public double totalMultas() {
+        double total = 0;
+
+        for (Multa a : multas) {
+            if(a!=null){
+            total += a.getCosto();
+            }
+            
+        }
+        return total;
     }
 
 }

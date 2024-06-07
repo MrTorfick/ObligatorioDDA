@@ -118,6 +118,16 @@ public class Parking {
         }
         return cantidad;
     }
+    
+     public int cantidadCocherasLibres() {
+        int cantidad = 0;
+        for (Cochera cochera : listaCocheras) {
+            if (!cochera.isEstado()) {
+                cantidad++;
+            }
+        }
+        return cantidad;
+    }
 
     public void actualizarTendencia() {
         int ingresos = obtenerCantidadDeIngresosEnCocherasEnLosUltimos10Segundos();
@@ -137,6 +147,7 @@ public class Parking {
             System.out.println("Tendencia negativa");
             factorDemanda = tendenciaActual.calcularFactorDemanda(factorDemanda, listaCocheras.size(), cantidadCocherasOcupadas());
         }
+        Fachada.getInstancia().avisar(Fachada.Eventos.cambioEstadoParking);
     }
 
     public double totalEstadias() {
@@ -150,9 +161,17 @@ public class Parking {
     
     public double totalFacturado(){
         double total=0;
-        
         for(Cochera c:listaCocheras){
             total+=c.totalFacturado();
+        }
+        return total;
+    }
+    
+    public double totalMultas(){
+        double total=0;
+        
+        for(Cochera c:listaCocheras){
+            total+=c.totalFacturadoPorMultas();
         }
         return total;
     }

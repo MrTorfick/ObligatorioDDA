@@ -10,4 +10,24 @@ package logica;
  */
 public class Multa {
     
+    private double costo;
+
+    public Multa(double costo) {
+        this.costo = costo;
+    }
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
+    }
+    
+    
+    
+    
+    
+    
+    
 }

@@ -30,6 +30,8 @@ public class ControladorPanel implements Observador {
             actualizarContadorEstadias();
         }else if(evento.equals(Fachada.Eventos.cambioTotalFacturado)){
             actualizarTotalFacturado();
+        }else if(evento.equals(Fachada.Eventos.cambioEstadoParking)){
+            listarParkings();
         }
     }
 
@@ -39,6 +41,9 @@ public class ControladorPanel implements Observador {
 
     private void actualizarTotalFacturado() {
         vista.mostrarTotalFacturado(Fachada.getInstancia().obtenerTotalFacturado());
+    }
+    private void listarParkings(){
+        vista.listarParkings(Fachada.getInstancia().getListaParkings());
     }
 
 }
