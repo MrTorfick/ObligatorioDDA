@@ -13,8 +13,6 @@ public class TipoEtiquetaDiscapacitado extends TipoEtiqueta {
         super("Discapacitado");
     }
 
-
-
     @Override
     public double calcularMulta(double valorEstadia, double tiempoEstadia) {
         return 250;

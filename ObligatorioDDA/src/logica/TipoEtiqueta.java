@@ -16,8 +16,7 @@ public abstract class TipoEtiqueta {
     }
     
     
-    
-
+ 
     public String getNombre() {
         return nombre;
     }

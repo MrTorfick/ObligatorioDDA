@@ -18,8 +18,10 @@ public class Parking extends Observable {
     private ArrayList<Cochera> listaCocheras;
     private Tendencia tendenciaActual;
     private double factorDemanda;
-    
-    public enum Eventos{cambioListaTarifas};
+
+    public enum Eventos {
+        cambioListaTarifas, cambioDisponibilidad
+    };
 
     public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas, ArrayList<Cochera> listaCocheras) {
         this.nombre = nombre;
@@ -120,8 +122,21 @@ public class Parking extends Observable {
         }
         return cantidad;
     }
-    
-     public int cantidadCocherasLibres() {
+
+    public int cantidadCocherasLibresPorEtiqueta(TipoEtiqueta te) {
+
+        int cantidad = 0;
+
+        for (Cochera cochera : listaCocheras) {
+            if (!cochera.isEstado() && cochera.existeEtiqueta(te.getNombre())) {
+                cantidad++;
+            }
+        }
+        return cantidad;
+
+    }
+
+    public int cantidadCocherasLibres() {
         int cantidad = 0;
         for (Cochera cochera : listaCocheras) {
             if (!cochera.isEstado()) {
@@ -160,39 +175,35 @@ public class Parking extends Observable {
         }
         return total;
     }
-    
-    public double totalFacturado(){
-        double total=0;
-        for(Cochera c:listaCocheras){
-            total+=c.totalFacturado();
+
+    public double totalFacturado() {
+        double total = 0;
+        for (Cochera c : listaCocheras) {
+            total += c.totalFacturado();
         }
         return total;
     }
-    
-    public double totalMultas(){
-        double total=0;
-        
-        for(Cochera c:listaCocheras){
-            total+=c.totalFacturadoPorMultas();
+
+    public double totalMultas() {
+        double total = 0;
+
+        for (Cochera c : listaCocheras) {
+            total += c.totalFacturadoPorMultas();
         }
         return total;
     }
-    
-    
-    public void modificarCostoPorVehiculo(TipoVehiculo v, double costo){
-    
+
+    public void modificarCostoPorVehiculo(TipoVehiculo v, double costo) {
+
         //Hacer validaciones
-        
-        for(Tarifa t:listaTarifas){
-            if(t.getTipoVehiculo().equals(v)){
+        for (Tarifa t : listaTarifas) {
+            if (t.getTipoVehiculo().equals(v)) {
                 t.setCostoFinal(costo);
                 avisar(Eventos.cambioListaTarifas);
                 break;
             }
         }
-        
+
     }
-    
-    
 
 }
