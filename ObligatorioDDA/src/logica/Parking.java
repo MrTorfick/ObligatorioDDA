@@ -10,7 +10,7 @@ import observador.Observable;
 /**
  * @author marcos
  */
-public class Parking {
+public class Parking extends Observable {
 
     private String nombre;
     private String direccion;
@@ -18,6 +18,8 @@ public class Parking {
     private ArrayList<Cochera> listaCocheras;
     private Tendencia tendenciaActual;
     private double factorDemanda;
+    
+    public enum Eventos{cambioListaTarifas};
 
     public Parking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas, ArrayList<Cochera> listaCocheras) {
         this.nombre = nombre;
@@ -175,5 +177,22 @@ public class Parking {
         }
         return total;
     }
+    
+    
+    public void modificarCostoPorVehiculo(TipoVehiculo v, double costo){
+    
+        //Hacer validaciones
+        
+        for(Tarifa t:listaTarifas){
+            if(t.getTipoVehiculo().equals(v)){
+                t.setCostoFinal(costo);
+                avisar(Eventos.cambioListaTarifas);
+                break;
+            }
+        }
+        
+    }
+    
+    
 
 }

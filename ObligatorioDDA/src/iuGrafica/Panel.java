@@ -40,7 +40,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
         totalFacturacion = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaParkings = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        botonPrecios = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -67,10 +67,10 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
         ));
         jScrollPane1.setViewportView(tablaParkings);
 
-        jButton1.setText("Precios");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonPrecios.setText("Precios");
+        botonPrecios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonPreciosActionPerformed(evt);
             }
         });
 
@@ -119,7 +119,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(469, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(botonPrecios)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(48, 48, 48))
@@ -163,7 +163,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(botonPrecios)
                     .addComponent(jButton2))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -180,9 +180,13 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new ListaPrecios(this).setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void botonPreciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPreciosActionPerformed
+
+        int filaSeleccionada = tablaParkings.getSelectedRow();
+        String selectedParking = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
+        Parking parking = controlador.obtenerParking(selectedParking);
+        new ListaPrecios(this, parking).setVisible(true);
+    }//GEN-LAST:event_botonPreciosActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
@@ -225,7 +229,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botonPrecios;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;

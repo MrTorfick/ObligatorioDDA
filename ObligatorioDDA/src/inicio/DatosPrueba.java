@@ -112,7 +112,7 @@ public class DatosPrueba {
 
         listaEtiquetas.add(new TipoEtiquetaEmpleado());
         listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
-        //listaEtiquetas.add(new TipoEtiquetaElectrico());
+        listaEtiquetas.add(new TipoEtiquetaElectrico());
 
 
         listaTarifas.add(new Tarifa(120, new TipoVehiculo("Carga", 120)));

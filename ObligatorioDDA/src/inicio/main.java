@@ -11,14 +11,8 @@ import simuladorIU.SimuladorIU;
 import simuladortransito.Estacionable;
 import simuladortransito.Transitable;
 
-/**
- * @author marcos
- */
 public class main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
 
         //DatosPrueba d = new DatosPrueba();

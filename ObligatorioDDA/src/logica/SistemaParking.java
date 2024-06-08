@@ -13,7 +13,6 @@ import observador.Observable;
 public class SistemaParking {
 
     ArrayList<Parking> listaParkings = new ArrayList();
-    
 
     public void agregarParking(String nombre, String direccion, ArrayList<Tarifa> listaTarifas, ArrayList<Cochera> listaCocheras) {
 
@@ -26,7 +25,7 @@ public class SistemaParking {
         listaParkings.add(parking);
     }
 
-/*
+    /*
     private Parking crearParking(String nombre, String direccion, List<Tarifa> listaTarifas, List<Cochera> listaCocheras) {
         Objects.requireNonNull(nombre, "El nombre no puede ser nulo");
         Objects.requireNonNull(direccion, "La dirección no puede ser nula");
@@ -35,8 +34,7 @@ public class SistemaParking {
 
         return new Parking(nombre, direccion, listaTarifas, listaCocheras);
     }
-*/
-
+     */
     public ArrayList<Parking> getListaParkings() {
         return listaParkings;
     }
@@ -57,24 +55,32 @@ public class SistemaParking {
         }
         return cocheras;
     }
-    
-   
-    public double obtenerTotalEstadias(){
-        double total=0;
-        for(Parking p :listaParkings){
-            total+=p.totalEstadias();
+
+    public double obtenerTotalEstadias() {
+        double total = 0;
+        for (Parking p : listaParkings) {
+            total += p.totalEstadias();
         }
         return total;
     }
-    
-    public double obtenerTotalFacturado(){
-        double total=0;
-        
-        for(Parking p:listaParkings){
-            total+=p.totalFacturado();
+
+    public double obtenerTotalFacturado() {
+        double total = 0;
+
+        for (Parking p : listaParkings) {
+            total += p.totalFacturado();
         }
         return total;
     }
-    
-    
+
+    public Parking obtenerParking(String nombre) {
+        for (Parking p : listaParkings) {
+
+            if (p.getNombre().equals(nombre)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
 }

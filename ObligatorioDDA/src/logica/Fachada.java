@@ -58,4 +58,10 @@ public class Fachada extends Observable {
         return sParking.obtenerTotalFacturado();
     }
 
+    public Parking obtenerParking(String nombre) {
+        return sParking.obtenerParking(nombre);
+    }
+    
+    
+
 }

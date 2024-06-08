@@ -90,7 +90,6 @@ public class Estadia {
         double precioBaseVehiculo = cochera.obtenerCostoPorTipoVehiculo(vehiculo.getTipoVehiculo());
         double totalMultas = verificarMultas(precioBaseVehiculo * tiempoEstadia, tiempoEstadia);
         double total = (precioBaseVehiculo * tiempoEstadia * cochera.obtenerDemandaParking()) + totalMultas;
-        System.out.println("Costo total estadia: " + total);
 
         return total;
 

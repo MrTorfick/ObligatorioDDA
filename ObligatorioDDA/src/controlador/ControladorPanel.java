@@ -6,6 +6,7 @@ package controlador;
 
 import logica.Cochera;
 import logica.Fachada;
+import logica.Parking;
 import observador.Observable;
 import observador.Observador;
 
@@ -44,6 +45,10 @@ public class ControladorPanel implements Observador {
     }
     private void listarParkings(){
         vista.listarParkings(Fachada.getInstancia().getListaParkings());
+    }
+    public Parking obtenerParking(String nombre){
+        //si parking tira excepcion, hacer un vista.MostrarMensajeError();
+        return Fachada.getInstancia().obtenerParking(nombre);
     }
 
 }
