@@ -88,13 +88,13 @@ public class Parking extends Observable {
         this.listaCocheras = listaCocheras;
     }
 
-    public double obtenerCostoPorTipoDeVehiculo(TipoVehiculo tipoVehiculo) {
+    public Tarifa obtenerCostoPorTipoDeVehiculo(TipoVehiculo tipoVehiculo) {
         for (Tarifa tarifa : listaTarifas) {
             if (tarifa.getTipoVehiculo().equals(tipoVehiculo)) {
-                return tarifa.getCosto();
+                return tarifa;
             }
         }
-        return 0;
+        return null;
     }
 
     public int obtenerCantidadDeIngresosEnCocherasEnLosUltimos10Segundos() {
@@ -193,9 +193,10 @@ public class Parking extends Observable {
         return total;
     }
 
+    /*
     public void modificarCostoPorVehiculo(TipoVehiculo v, double costo) {
 
-        //Hacer validaciones
+        
         for (Tarifa t : listaTarifas) {
             if (t.getTipoVehiculo().equals(v)) {
                 t.setCostoFinal(costo);
@@ -203,7 +204,20 @@ public class Parking extends Observable {
                 break;
             }
         }
+        
+    }
 
+     */
+    public void actualizarListaPrecios(String tipoVehiculo, String nuevoValor) {
+
+        //Hacer validaciones
+        for (Tarifa t : listaTarifas) {
+            if (t.getTipoVehiculo().getNombre().equals(tipoVehiculo)) {
+                t.setCostoFinal(Double.parseDouble(nuevoValor));
+                avisar(Eventos.cambioListaTarifas);
+                break;
+            }
+        }
     }
 
 }

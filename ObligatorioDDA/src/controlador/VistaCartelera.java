@@ -6,6 +6,7 @@ package controlador;
 
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import logica.Tarifa;
 
 /**
  *
@@ -13,7 +14,7 @@ import java.util.Map.Entry;
  */
 public interface VistaCartelera {
     
-    public void listarTipoVehiculo();
+    public void listarTipoVehiculo(ArrayList<Tarifa> listaTarifas);
     public void listarEtiquetas(ArrayList<Entry<String, Integer>> lista, int cantidadCocherasLibres);
     
 }

@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.swing.table.DefaultTableModel;
 import logica.Parking;
+import logica.Tarifa;
 
 /**
  *
@@ -128,11 +129,6 @@ public class Cartelera extends javax.swing.JDialog implements VistaCartelera {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void listarTipoVehiculo() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public void listarEtiquetas(ArrayList<Entry<String, Integer>> lista, int cantidadCocherasLibres) {
         totalDisponible.setText(cantidadCocherasLibres + "");
 
@@ -150,6 +146,24 @@ public class Cartelera extends javax.swing.JDialog implements VistaCartelera {
         int rowCount = modeloTabla1.getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {
             modeloTabla1.removeRow(i);
+        }
+    }
+
+    @Override
+    public void listarTipoVehiculo(ArrayList<Tarifa> listaTarifas) {
+        limpiarListadoTipoVehiculos();
+
+        for (Tarifa t : listaTarifas) {
+            modeloTabla2.addRow(new Object[]{t.getTipoVehiculo().getNombre(),
+                t.getCosto()});
+        }
+
+    }
+
+    private void limpiarListadoTipoVehiculos() {
+        int rowCount = modeloTabla2.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            modeloTabla2.removeRow(i);
         }
     }
 }

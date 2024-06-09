@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import logica.Parking;
 import logica.Tarifa;
+import logica.TipoVehiculo;
 
 /**
  *
@@ -79,6 +80,11 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
         jButton1.setText("Cerrar");
 
         jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,6 +127,14 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int filaSeleccionada = tablaPrecios.getSelectedRow();
+        String tipoVehiculo = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
+        String nuevoValor = jTextField1.getText();
+        controlador.ActualizarListaPrecios(tipoVehiculo, nuevoValor);
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -136,7 +150,7 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
         limpiarTabla();
 
         for (Tarifa t : listaTarifas) {
-            modeloTabla.addRow(new Object[]{t.getTipoVehiculo(),
+            modeloTabla.addRow(new Object[]{t.getTipoVehiculo().getNombre(),
                 t.getCosto()});
         }
 

@@ -8,6 +8,7 @@ import controlador.ControladorPanel;
 import controlador.VistaPanel;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import logica.Anomalia;
 import logica.Parking;
 
 /**
@@ -20,14 +21,17 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
      * Creates new form PanelDeControl
      */
     private ControladorPanel controlador;
-    DefaultTableModel modeloTabla = new DefaultTableModel();
+    DefaultTableModel modeloTabla1 = new DefaultTableModel();
+    DefaultTableModel modeloTabla2 = new DefaultTableModel();
 
     public Panel() {
         initComponents();
         setLocationRelativeTo(null);
         controlador = new ControladorPanel(this);
-        modeloTabla.setColumnIdentifiers(new Object[]{"Parking", "Ocupadas", "Libres", "Estado", "Factor demanda", "Estadias", "Multas", "Subtotal"});
-        tablaParkings.setModel(modeloTabla);
+        modeloTabla1.setColumnIdentifiers(new Object[]{"Parking", "Ocupadas", "Libres", "Estado", "Factor demanda", "Estadias", "Multas", "Subtotal"});
+        modeloTabla2.setColumnIdentifiers(new Object[]{"Fecha/Hora", "Propietario", "Codigo de anomalia", "Cochera"});
+        tablaParkings.setModel(modeloTabla1);
+        tablaAnomalia.setModel(modeloTabla2);
     }
 
     @SuppressWarnings("unchecked")
@@ -43,8 +47,8 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
         botonPrecios = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        tablaAnomalia = new javax.swing.JTable();
+        jCheckBoxMonitorearAnomalias = new javax.swing.JCheckBox();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,7 +85,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAnomalia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -107,12 +111,12 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tablaAnomalia);
 
-        jCheckBox1.setText("Monitorear anomalias");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxMonitorearAnomalias.setText("Monitorear anomalias");
+        jCheckBoxMonitorearAnomalias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                jCheckBoxMonitorearAnomaliasActionPerformed(evt);
             }
         });
 
@@ -134,7 +138,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(jCheckBox1))
+                        .addComponent(jCheckBoxMonitorearAnomalias))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addComponent(jButton3)))
@@ -176,7 +180,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(105, 105, 105)
-                        .addComponent(jCheckBox1)
+                        .addComponent(jCheckBoxMonitorearAnomalias)
                         .addGap(64, 64, 64)
                         .addComponent(jButton3)))
                 .addGap(164, 164, 164))
@@ -188,18 +192,18 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     private void botonPreciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPreciosActionPerformed
 
         int filaSeleccionada = tablaParkings.getSelectedRow();
-        String selectedParking = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
+        String selectedParking = (String) modeloTabla1.getValueAt(filaSeleccionada, 0);
         Parking parking = controlador.obtenerParking(selectedParking);
         new ListaPrecios(this, parking).setVisible(true);
     }//GEN-LAST:event_botonPreciosActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void jCheckBoxMonitorearAnomaliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMonitorearAnomaliasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_jCheckBoxMonitorearAnomaliasActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int filaSeleccionada = tablaParkings.getSelectedRow();
-        String selectedParking = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
+        String selectedParking = (String) modeloTabla1.getValueAt(filaSeleccionada, 0);
         Parking parking = controlador.obtenerParking(selectedParking);
         new Cartelera(this, parking).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -221,12 +225,12 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     private javax.swing.JButton botonPrecios;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBoxMonitorearAnomalias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tablaAnomalia;
     private javax.swing.JTable tablaParkings;
     private javax.swing.JLabel totalEstadias;
     private javax.swing.JLabel totalFacturacion;
@@ -250,7 +254,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
         limpiarTablaPrincipal();
 
         for (Parking p : listaParkings) {
-            modeloTabla.addRow(new Object[]{p.getNombre(),
+            modeloTabla1.addRow(new Object[]{p.getNombre(),
                 p.cantidadCocherasOcupadas(),
                 p.cantidadCocherasLibres(),
                 p.getTendenciaActual().getNombre(),
@@ -263,11 +267,24 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     }
 
     private void limpiarTablaPrincipal() {
-        int rowCount = modeloTabla.getRowCount();
+        int rowCount = modeloTabla1.getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {
-            modeloTabla.removeRow(i);
+            modeloTabla1.removeRow(i);
         }
 
+    }
+
+    @Override
+    public void listarAnomalias(ArrayList<Anomalia> listaAnomalias) {
+
+        if (jCheckBoxMonitorearAnomalias.isSelected()) {
+
+            for (Anomalia a : listaAnomalias) {
+                modeloTabla2.addRow(new Object[]{a.getFecha(),
+                    a.getEstadia().getVehiculo().getPropietario().getCedula(),
+                    a.getError(), a.getEstadia().getCochera().getCodigo()});
+            }
+        }
     }
 
 }

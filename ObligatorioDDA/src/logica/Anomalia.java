@@ -25,6 +25,31 @@ public class Anomalia {
         this.error = error;
     }
 
+    public codigoError getError() {
+        return error;
+    }
+    
+    
+
+    public Estadia getEstadia() {
+        return estadia;
+    }
+
+    public void setEstadia(Estadia estadia) {
+        this.estadia = estadia;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    
+    
+    
+
     
 
 

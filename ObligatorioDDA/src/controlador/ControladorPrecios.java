@@ -36,4 +36,8 @@ public class ControladorPrecios implements Observador {
         vista.listarPrecios(parking.getListaTarifas());
     }
 
+    public void ActualizarListaPrecios(String tipoVehiculo, String nuevoValor) {
+        parking.actualizarListaPrecios(tipoVehiculo, nuevoValor);
+    }
+
 }

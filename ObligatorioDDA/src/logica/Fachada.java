@@ -17,7 +17,8 @@ public class Fachada extends Observable {
     private SistemaAnomalia sAnomalia = new SistemaAnomalia();
 
     public enum Eventos {
-        cambioListaEstadias, cambioTotalFacturado, cambioEstadoParking
+        cambioListaEstadias, cambioTotalFacturado, cambioEstadoParking,
+        cambioListaAnomalias
     }
 
     private static Fachada instancia = new Fachada();
@@ -30,6 +31,11 @@ public class Fachada extends Observable {
 
     }
 
+    public ArrayList<Anomalia> getListaAnomalias() {
+        return sAnomalia.getListaAnomalias();
+    }
+
+    
     public double obtenerTotalEstadias() {
         return sParking.obtenerTotalEstadias();
     }

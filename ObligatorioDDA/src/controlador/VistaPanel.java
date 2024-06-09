@@ -5,6 +5,7 @@
 package controlador;
 
 import java.util.ArrayList;
+import logica.Anomalia;
 import logica.Parking;
 
 /**
@@ -16,6 +17,7 @@ public interface VistaPanel {
     public void MostrarTotalEstadias(double total);
     public void mostrarTotalFacturado(double total);
     public void listarParkings(ArrayList<Parking> listaParkings);
+    public void listarAnomalias(ArrayList<Anomalia> listaAnomalias);
     
     
 
