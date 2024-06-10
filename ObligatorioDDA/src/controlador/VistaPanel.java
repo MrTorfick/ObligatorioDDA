@@ -22,6 +22,8 @@ public interface VistaPanel {
     public void mostrarListaPrecios(Parking p);
     public void mostrarCartelera(Parking p);
     public void limpiarListadoParkings();
+
+    public void limpiarListadoAnomalias();
     
     
 

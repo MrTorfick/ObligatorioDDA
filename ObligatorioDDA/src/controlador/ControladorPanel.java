@@ -71,6 +71,7 @@ public class ControladorPanel implements Observador {
     }
 
     private void listarAnomalias() {
+        vista.limpiarListadoAnomalias();
         vista.listarAnomalias(Fachada.getInstancia().getListaAnomalias());
     }
 

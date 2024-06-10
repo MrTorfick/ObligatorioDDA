@@ -314,4 +314,12 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
 
     }
 
+    @Override
+    public void limpiarListadoAnomalias() {
+        int rowCount = modeloTabla2.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            modeloTabla2.removeRow(i);
+        }
+    }
+
 }

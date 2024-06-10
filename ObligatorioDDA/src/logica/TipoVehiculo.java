@@ -12,12 +12,6 @@ import java.util.Objects;
 public class TipoVehiculo {
 
     private String nombre;
-    private double precioBase;
-
-    public TipoVehiculo(String nombre, double precioBase) {
-        this.nombre = nombre;
-        this.precioBase = precioBase;
-    }
 
     public TipoVehiculo(String nombre) {
         this.nombre = nombre;
@@ -31,15 +25,6 @@ public class TipoVehiculo {
         this.nombre = nombre;
     }
 
-    public double getPrecioBase() {
-        return precioBase;
-    }
-
-    public void setPrecioBase(double precioBase) {
-        this.precioBase = precioBase;
-    }
-
-
     @Override
     public String toString() {
         return nombre;
@@ -47,8 +32,12 @@ public class TipoVehiculo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         TipoVehiculo that = (TipoVehiculo) o;
         return Objects.equals(nombre, that.nombre);
     }
