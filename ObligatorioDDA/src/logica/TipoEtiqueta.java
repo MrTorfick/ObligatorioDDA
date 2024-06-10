@@ -24,10 +24,8 @@ public abstract class TipoEtiqueta {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public void validar() {
-        //TODO
-    }
+    
+    
 
     public abstract double calcularMulta(double valorEstadia, double tiempoEstadia);
 

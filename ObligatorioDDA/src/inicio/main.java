@@ -15,7 +15,6 @@ public class main {
 
     public static void main(String[] args) {
 
-        //DatosPrueba d = new DatosPrueba();
         SensorParking sensor = new SensorParking();
         
         ArrayList<Estacionable> cocheras = DatosPrueba.getCocheras();

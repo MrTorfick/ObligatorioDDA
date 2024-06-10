@@ -209,21 +209,7 @@ public class Parking extends Observable {
         return total;
     }
 
-    /*
-    public void modificarCostoPorVehiculo(TipoVehiculo v, double costo) {
-
-        
-        for (Tarifa t : listaTarifas) {
-            if (t.getTipoVehiculo().equals(v)) {
-                t.setCostoFinal(costo);
-                avisar(Eventos.cambioListaTarifas);
-                break;
-            }
-        }
-        
-    }
-
-     */
+   
     public double promedioTarifaTipoVehiculo(String tipoVehiculo) {
         double suma = 0;
         double contador = 0;
@@ -245,7 +231,6 @@ public class Parking extends Observable {
 
     public void actualizarListaPrecios(String tipoVehiculo, String nuevoValor) throws ParkingException {
 
-        //Hacer validaciones
         double valor = Double.parseDouble(nuevoValor);
 
         if (valor < 0) {

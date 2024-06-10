@@ -59,7 +59,6 @@ public class Vehiculo implements Transitable {
 
     @Override
     public boolean esDiscapacitado() {
-        //TipoEtiqueta es abstract y polimorfica, hazlo correctamente
 
         for (TipoEtiqueta etiqueta : listaEtiquetas) {
             if (etiqueta instanceof TipoEtiquetaDiscapacitado) {
