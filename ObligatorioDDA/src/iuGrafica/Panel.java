@@ -7,6 +7,7 @@ package iuGrafica;
 import controlador.ControladorPanel;
 import controlador.VistaPanel;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import logica.Anomalia;
 import logica.Parking;
@@ -27,11 +28,11 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     public Panel() {
         initComponents();
         setLocationRelativeTo(null);
-        controlador = new ControladorPanel(this);
         modeloTabla1.setColumnIdentifiers(new Object[]{"Parking", "Ocupadas", "Libres", "Estado", "Factor demanda", "Estadias", "Multas", "Subtotal"});
         modeloTabla2.setColumnIdentifiers(new Object[]{"Fecha/Hora", "Propietario", "Codigo de anomalia", "Cochera"});
         tablaParkings.setModel(modeloTabla1);
         tablaAnomalia.setModel(modeloTabla2);
+        controlador = new ControladorPanel(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -49,9 +50,13 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaAnomalia = new javax.swing.JTable();
         jCheckBoxMonitorearAnomalias = new javax.swing.JCheckBox();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Estadias:");
 
@@ -120,8 +125,6 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
             }
         });
 
-        jButton3.setText("Cerrar");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,13 +138,8 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jCheckBoxMonitorearAnomalias))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jButton3)))
+                .addGap(31, 31, 31)
+                .addComponent(jCheckBoxMonitorearAnomalias)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -180,9 +178,7 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(105, 105, 105)
-                        .addComponent(jCheckBoxMonitorearAnomalias)
-                        .addGap(64, 64, 64)
-                        .addComponent(jButton3)))
+                        .addComponent(jCheckBoxMonitorearAnomalias)))
                 .addGap(164, 164, 164))
         );
 
@@ -191,40 +187,49 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
 
     private void botonPreciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPreciosActionPerformed
 
-        int filaSeleccionada = tablaParkings.getSelectedRow();
-        String selectedParking = (String) modeloTabla1.getValueAt(filaSeleccionada, 0);
-        Parking parking = controlador.obtenerParking(selectedParking);
-        new ListaPrecios(this, parking).setVisible(true);
+        String parkingSeleccionado = obtenerParking();
+        if (parkingSeleccionado != null) {
+            controlador.mostrarListaPrecios(parkingSeleccionado);
+        }
+
+
     }//GEN-LAST:event_botonPreciosActionPerformed
 
     private void jCheckBoxMonitorearAnomaliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMonitorearAnomaliasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxMonitorearAnomaliasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private String obtenerParking() {
+
         int filaSeleccionada = tablaParkings.getSelectedRow();
-        String selectedParking = (String) modeloTabla1.getValueAt(filaSeleccionada, 0);
-        Parking parking = controlador.obtenerParking(selectedParking);
-        new Cartelera(this, parking).setVisible(true);
+
+        if (filaSeleccionada == -1) {
+            mostrarMensaje("Debe seleccionar un parking");
+        } else {
+            String parkingSeleccionado = (String) modeloTabla1.getValueAt(filaSeleccionada, 0);
+            return parkingSeleccionado;
+        }
+        return null;
+    }
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        String parkingSeleccionado = obtenerParking();
+        if (parkingSeleccionado != null) {
+            controlador.mostrarCartelera(parkingSeleccionado);
+        }
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    /*
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Panel().setVisible(true);
-            }
-        });
-    }
-     */
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        controlador.salir();
+    }//GEN-LAST:event_formWindowClosing
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonPrecios;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBoxMonitorearAnomalias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -251,8 +256,6 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
     @Override
     public void listarParkings(ArrayList<Parking> listaParkings) {
 
-        limpiarTablaPrincipal();
-
         for (Parking p : listaParkings) {
             modeloTabla1.addRow(new Object[]{p.getNombre(),
                 p.cantidadCocherasOcupadas(),
@@ -266,25 +269,49 @@ public class Panel extends javax.swing.JFrame implements VistaPanel {
 
     }
 
-    private void limpiarTablaPrincipal() {
-        int rowCount = modeloTabla1.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            modeloTabla1.removeRow(i);
-        }
-
-    }
-
     @Override
     public void listarAnomalias(ArrayList<Anomalia> listaAnomalias) {
 
         if (jCheckBoxMonitorearAnomalias.isSelected()) {
 
             for (Anomalia a : listaAnomalias) {
-                modeloTabla2.addRow(new Object[]{a.getFecha(),
-                    a.getEstadia().getVehiculo().getPropietario().getCedula(),
-                    a.getError(), a.getEstadia().getCochera().getCodigo()});
+
+                if (a.getEstadia().getVehiculo() == null) {
+                    modeloTabla2.addRow(new Object[]{a.getFecha(),
+                        "No corresponde",
+                        a.getError(), a.getEstadia().getCochera().getCodigo()});
+                } else {
+                    modeloTabla2.addRow(new Object[]{a.getFecha(),
+                        a.getEstadia().getVehiculo().getPropietario().getCedula(),
+                        a.getError(), a.getEstadia().getCochera().getCodigo()});
+                }
+
             }
         }
+    }
+
+    @Override
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    @Override
+    public void mostrarListaPrecios(Parking p) {
+        new ListaPrecios(this, p).setVisible(true);
+    }
+
+    @Override
+    public void mostrarCartelera(Parking p) {
+        new Cartelera(this, p).setVisible(true);
+    }
+
+    @Override
+    public void limpiarListadoParkings() {
+        int rowCount = modeloTabla1.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            modeloTabla1.removeRow(i);
+        }
+
     }
 
 }

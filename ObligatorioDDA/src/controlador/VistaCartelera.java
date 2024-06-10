@@ -16,5 +16,7 @@ public interface VistaCartelera {
     
     public void listarTipoVehiculo(ArrayList<Tarifa> listaTarifas);
     public void listarEtiquetas(ArrayList<Entry<String, Integer>> lista, int cantidadCocherasLibres);
+    public void limpiarListadoEtiquetas();
+    public void limpiarListadoTipoVehiculos();
     
 }

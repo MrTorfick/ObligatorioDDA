@@ -7,6 +7,7 @@ package controlador;
 import logica.Cochera;
 import logica.Fachada;
 import logica.Parking;
+import logica.ParkingException;
 import observador.Observable;
 import observador.Observador;
 
@@ -15,15 +16,15 @@ import observador.Observador;
  * @author marcos
  */
 public class ControladorPanel implements Observador {
-    
+
     private VistaPanel vista;
-    
+
     public ControladorPanel(VistaPanel vista) {
         this.vista = vista;
-        //cochera.agregarObservador(this);
         Fachada.getInstancia().agregarObservador(this);
+        listarParkings();
     }
-    
+
     @Override
     public void actualizar(Object evento, Observable origen) {
         System.out.println(origen);
@@ -37,26 +38,49 @@ public class ControladorPanel implements Observador {
             listarAnomalias();
         }
     }
-    
+
     private void actualizarContadorEstadias() {
         vista.MostrarTotalEstadias(Fachada.getInstancia().obtenerTotalEstadias());
     }
-    
+
     private void actualizarTotalFacturado() {
         vista.mostrarTotalFacturado(Fachada.getInstancia().obtenerTotalFacturado());
     }
 
     private void listarParkings() {
+        vista.limpiarListadoParkings();
         vista.listarParkings(Fachada.getInstancia().getListaParkings());
     }
 
-    public Parking obtenerParking(String nombre) {
-        //si parking tira excepcion, hacer un vista.MostrarMensajeError();
-        return Fachada.getInstancia().obtenerParking(nombre);
+    public void mostrarListaPrecios(String nombre) {
+
+        Parking p = obtenerParking(nombre);
+        vista.mostrarListaPrecios(p);
+
     }
-    
+
+    private Parking obtenerParking(String nombre) {
+        try {
+            Parking p = Fachada.getInstancia().obtenerParking(nombre);
+            return p;
+        } catch (ParkingException e) {
+            vista.mostrarMensaje(e.getMessage());
+        }
+        return null;
+
+    }
+
     private void listarAnomalias() {
         vista.listarAnomalias(Fachada.getInstancia().getListaAnomalias());
     }
-    
+
+    public void mostrarCartelera(String selectedParking) {
+        Parking p = obtenerParking(selectedParking);
+        vista.mostrarCartelera(p);
+    }
+
+    public void salir() {
+        Fachada.getInstancia().quitarObservador(this);
+    }
+
 }

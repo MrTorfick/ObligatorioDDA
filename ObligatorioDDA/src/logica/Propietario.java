@@ -59,6 +59,14 @@ public class Propietario {
     public void descontarSalario(double montoADescontar){
         setDineroActual(getDineroActual()-montoADescontar);
     }
+
+    @Override
+    public String toString() {
+        return "cedula=" + cedula;
+    }
+    
+    
+    
     
     
     

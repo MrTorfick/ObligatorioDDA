@@ -31,11 +31,14 @@ public class Fachada extends Observable {
 
     }
 
+    public double promedioTarifaParkingsPorTipoVehiculo(String tipoVehiculo) {
+        return sParking.promedioTarifaParkingsPorTipoVehiculo(tipoVehiculo);
+    }
+
     public ArrayList<Anomalia> getListaAnomalias() {
         return sAnomalia.getListaAnomalias();
     }
 
-    
     public double obtenerTotalEstadias() {
         return sParking.obtenerTotalEstadias();
     }
@@ -44,7 +47,7 @@ public class Fachada extends Observable {
         sAnomalia.agregarAnomalia(e, fecha, error);
     }
 
-    public void agregarParking(String nombre, String direccion, ArrayList<Tarifa> listaTarifa, ArrayList<Cochera> listaCocheras) {
+    public void agregarParking(String nombre, String direccion, ArrayList<Tarifa> listaTarifa, ArrayList<Cochera> listaCocheras) throws ParkingException {
         sParking.agregarParking(nombre, direccion, listaTarifa, listaCocheras);
     }
 
@@ -64,10 +67,8 @@ public class Fachada extends Observable {
         return sParking.obtenerTotalFacturado();
     }
 
-    public Parking obtenerParking(String nombre) {
+    public Parking obtenerParking(String nombre) throws ParkingException {
         return sParking.obtenerParking(nombre);
     }
-    
-    
 
 }

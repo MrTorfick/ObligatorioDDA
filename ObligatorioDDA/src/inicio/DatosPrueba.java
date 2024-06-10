@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import logica.*;
+import logica.ParkingException;
 import simuladortransito.Estacionable;
 import simuladortransito.Transitable;
 
@@ -43,7 +44,6 @@ public class DatosPrueba {
         }
 
          */
-
     }
 
     /*
@@ -89,20 +89,106 @@ public class DatosPrueba {
 
             return lista;
         }
-    */
-    public static ArrayList<Transitable> getVehiculos(int cuantos) {
+     */
+   public static ArrayList<Transitable> getVehiculos(int totalCocheras) {
+    ArrayList<Transitable> lista = new ArrayList<>();
+    Random random = new Random();
 
-        ArrayList<Transitable> lista = new ArrayList();
-        ArrayList<TipoEtiqueta> listaEtiquetas = new ArrayList();
-        //listaEtiquetas.add(new TipoEtiquetaEmpleado());
-        //listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
+    // Crear al menos el doble de vehículos que el total de cocheras
+    int totalVehiculos = totalCocheras * 2;
+
+    for (int i = 0; i < totalVehiculos; i++) {
+        String nombre = "V" + (i + 1);
+        String tipo = getTipoVehiculo(i); // Obtener el tipo de vehículo alternando entre Motocicleta, Standard, Carga, Pasajeros
+        TipoVehiculo tipoVehiculo = new TipoVehiculo(tipo);
+        int saldo = random.nextInt(111) - 10; // Saldo entre -10 y 100
+        String cedula = String.format("%011d", i + 1); // Generar cédula de 11 dígitos
+        String propietario = "Propietario " + (i + 1);
+        ArrayList<Vehiculo> vehiculos = new ArrayList<>(); // ArrayList de vehículos del propietario
+        Propietario propietarioObj = new Propietario(cedula, propietario, vehiculos, saldo);
+        ArrayList<TipoEtiqueta> listaEtiquetas = getEtiquetasVehiculo(i, totalVehiculos); // Obtener las etiquetas para el vehículo
+        Vehiculo vehiculo = new Vehiculo(nombre, tipoVehiculo, listaEtiquetas, propietarioObj);
+        lista.add(vehiculo);
+        vehiculos.add(vehiculo); // Agregar el vehículo al ArrayList del propietario
+    }
+
+    return lista;
+}
+
+    private static ArrayList<TipoEtiqueta> getEtiquetasVehiculo(int i, int totalVehiculos) {
+    ArrayList<TipoEtiqueta> listaEtiquetas = new ArrayList<>();
+    if (i < totalVehiculos / 4) {
         listaEtiquetas.add(new TipoEtiquetaElectrico());
-        lista.add(new Vehiculo("V1", new TipoVehiculo("Carga"), listaEtiquetas, new Propietario("11111111111", "Propietario 1", null, 1000)));
-        lista.add(new Vehiculo("V2", new TipoVehiculo("Carga"), listaEtiquetas, new Propietario("22222222222", "Propietario 2", null, 1000)));
-        lista.add(new Vehiculo("V3", new TipoVehiculo("Carga"), listaEtiquetas, new Propietario("33333333333", "Propietario 3", null, 1000)));
+    } else if (i >= totalVehiculos / 4 && i < totalVehiculos / 2) {
+        listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
+    } else if (i >= totalVehiculos / 2 && i < (3 * totalVehiculos) / 4) {
+        listaEtiquetas.add(new TipoEtiquetaEmpleado());
+        listaEtiquetas.add(new TipoEtiquetaElectrico());
+    } else {
+        // Sin etiquetas
+    }
+    return listaEtiquetas;
+}
+
+    private static String getTipoVehiculo(int i) {
+        String[] tipos = {"Motocicleta", "Standard", "Carga", "Pasajeros"};
+        return tipos[i % tipos.length];
+    }
+
+    
+    public static ArrayList<Estacionable> getCocheras() {
+        ArrayList<Estacionable> lista = new ArrayList<>();
+        ArrayList<Tarifa> listaTarifas1 = new ArrayList<>();
+        ArrayList<Tarifa> listaTarifas2 = new ArrayList<>();
+
+        // Tarifas para el primer parking
+        listaTarifas1.add(new Tarifa(120, new TipoVehiculo("Carga", 0.1)));
+        listaTarifas1.add(new Tarifa(80, new TipoVehiculo("Automovil", 0.1)));
+        listaTarifas1.add(new Tarifa(60, new TipoVehiculo("Motocicleta", 0.05)));
+
+        // Tarifas para el segundo parking
+        listaTarifas2.add(new Tarifa(100, new TipoVehiculo("Carga", 0.1)));
+        listaTarifas2.add(new Tarifa(70, new TipoVehiculo("Automovil", 0.1)));
+        listaTarifas2.add(new Tarifa(50, new TipoVehiculo("Motocicleta", 0.05)));
+        listaTarifas2.add(new Tarifa(90, new TipoVehiculo("Camioneta", 0.1)));
+
+        Parking p1 = new Parking("Parking1", "Direccion1", listaTarifas1);
+        Parking p2 = new Parking("Parking2", "Direccion2", listaTarifas2);
+
+        for (int i = 0; i < 75; i++) {
+            ArrayList<TipoEtiqueta> listaEtiquetas = new ArrayList<>();
+            if (i < 10) {
+                listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
+            } else if (i >= 10 && i < 30) {
+                listaEtiquetas.add(new TipoEtiquetaElectrico());
+            } else if (i >= 30 && i < 45) {
+                listaEtiquetas.add(new TipoEtiquetaEmpleado());
+            } else if (i >= 45 && i < 60) {
+                // Sin etiquetas
+            } else {
+                listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
+                listaEtiquetas.add(new TipoEtiquetaElectrico());
+            }
+            lista.add(new Cochera(false, listaEtiquetas, p1));
+        }
+
+        for (int i = 0; i < 60; i++) {
+            ArrayList<TipoEtiqueta> listaEtiquetas = new ArrayList<>();
+            if (i < 15) {
+                listaEtiquetas.add(new TipoEtiquetaEmpleado());
+            } else if (i >= 15 && i < 35) {
+                listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
+                listaEtiquetas.add(new TipoEtiquetaElectrico());
+            } else if (i >= 35 && i < 50) {
+                // Sin etiquetas
+            } else {
+                listaEtiquetas.add(new TipoEtiquetaEmpleado());
+                listaEtiquetas.add(new TipoEtiquetaElectrico());
+            }
+            lista.add(new Cochera(false, listaEtiquetas, p2));
+        }
 
         return lista;
-
     }
 
     public static ArrayList<Estacionable> getCocheras(int cuantos) {
@@ -113,7 +199,6 @@ public class DatosPrueba {
         listaEtiquetas.add(new TipoEtiquetaEmpleado());
         listaEtiquetas.add(new TipoEtiquetaDiscapacitado());
         listaEtiquetas.add(new TipoEtiquetaElectrico());
-
 
         listaTarifas.add(new Tarifa(120, new TipoVehiculo("Carga", 120)));
 
@@ -135,7 +220,7 @@ public class DatosPrueba {
 
     }
 
-/*
+    /*
     public static ArrayList<Estacionable> getCocheras(int cuantos) {
         ArrayList<Estacionable> lista = new ArrayList<>();
         Random random = new Random();
@@ -161,8 +246,7 @@ public class DatosPrueba {
         return lista;
     }
 
- */
-
+     */
     public static ArrayList<Parking> getParkings() {
         return fachada.getListaParkings();
     }

@@ -38,6 +38,22 @@ public class Parking extends Observable {
         this.listaTarifas = listaTarifas;
         this.tendenciaActual = new TendenciaEstable();
         this.factorDemanda = 1;
+        this.listaCocheras = new ArrayList<Cochera>();
+    }
+
+    public void validar() throws ParkingException {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new ParkingException("Falta el nombre");
+        }
+        if (direccion == null || direccion.trim().isEmpty()) {
+            throw new ParkingException("Falta la direccion");
+        }
+        if (listaTarifas == null) {
+            throw new ParkingException("Falta la lista de tarifas");
+        }
+        if (listaCocheras == null) {
+            throw new ParkingException("Falta la lista de cocheras");
+        }
     }
 
     public Tendencia getTendenciaActual() {
@@ -208,9 +224,39 @@ public class Parking extends Observable {
     }
 
      */
-    public void actualizarListaPrecios(String tipoVehiculo, String nuevoValor) {
+    public double promedioTarifaTipoVehiculo(String tipoVehiculo) {
+        double suma = 0;
+        double contador = 0;
+
+        for (Tarifa t : listaTarifas) {
+            if (t.getTipoVehiculo().getNombre().equals(tipoVehiculo)) {
+                suma += t.getCosto();
+                contador++;
+            }
+        }
+
+        if (contador == 0) {
+            return 0;
+        }
+
+        return suma / contador;
+
+    }
+
+    public void actualizarListaPrecios(String tipoVehiculo, String nuevoValor) throws ParkingException {
 
         //Hacer validaciones
+        double valor = Double.parseDouble(nuevoValor);
+
+        if (valor < 0) {
+            throw new ParkingException("Valor invalido. El precio debe ser igual o mayor a cero");
+        }
+
+        double promedioTotalParkings = Fachada.getInstancia().promedioTarifaParkingsPorTipoVehiculo(tipoVehiculo) * 2;
+        if (valor >= promedioTotalParkings) {
+            throw new ParkingException("“Valor demasiado alto. El sistema no permite dispersión de precios por encima del 100%. Ingrese un valor menor a: " + promedioTotalParkings);
+        }
+
         for (Tarifa t : listaTarifas) {
             if (t.getTipoVehiculo().getNombre().equals(tipoVehiculo)) {
                 t.setCostoFinal(Double.parseDouble(nuevoValor));

@@ -152,13 +152,14 @@ public class Cochera extends Observable implements Estacionable {
         }
     }
 
-    private void VerificarAnomaliaEgreso(Vehiculo v) {
+    private boolean VerificarAnomaliaEgreso(Vehiculo v) {
         if (!this.estado) {
             Estadia e = new Estadia(new Date(), new Date(), this, null, null, new ArrayList<Multa>());
             listaEstadias.add(e);
             Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaEstadias);
             Fachada.getInstancia().agregarAnomalia(e, new Date(), Anomalia.codigoError.Mystery);
             Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaAnomalias);
+            return true;
         } else {
             if (!v.getPatente().equals(listaEstadias.get(listaEstadias.size() - 1).getVehiculo().getPatente())) {
                 Estadia e1 = listaEstadias.get(listaEstadias.size() - 1);
@@ -166,8 +167,10 @@ public class Cochera extends Observable implements Estacionable {
                 Estadia e2 = new Estadia(new Date(), new Date(), this, null, v, null);
                 Fachada.getInstancia().agregarAnomalia(e2, new Date(), Anomalia.codigoError.Transportador2);
                 Fachada.getInstancia().avisar(Fachada.Eventos.cambioListaAnomalias);
+                return true;
             }
         }
+        return false;
     }
 
     public void IngresoVehiculo(Vehiculo v) {
@@ -182,23 +185,25 @@ public class Cochera extends Observable implements Estacionable {
     }
 
     public void EgresoVehiculo(Vehiculo v) {
-        VerificarAnomaliaEgreso(v);
-        double costo = 0;
-        for (Estadia estadia : listaEstadias) {
-            if (estadia.getVehiculo().equals(v)) {
-                costo = estadia.calcularMonto();
-                setEstado(false);
-                estadia.setFechaSalida(new Date());
-                estadia.descontarSalarioPropietario(costo);
-                estadia.setCostoFinal(costo);
-                Fachada.getInstancia().avisar(Fachada.Eventos.cambioTotalFacturado);
-                parking.avisar(Parking.Eventos.cambioDisponibilidad);
-                break;
+        if (!VerificarAnomaliaEgreso(v)) {
+            double costo = 0;
+            for (Estadia estadia : listaEstadias) {
+                if (estadia.getVehiculo().equals(v)) {
+                    costo = estadia.calcularMonto();
+                    setEstado(false);
+                    estadia.setFechaSalida(new Date());
+                    estadia.descontarSalarioPropietario(costo);
+                    estadia.setCostoFinal(costo);
+                    Fachada.getInstancia().avisar(Fachada.Eventos.cambioTotalFacturado);
+                    parking.avisar(Parking.Eventos.cambioDisponibilidad);
+                    break;
+                }
             }
+            parking.actualizarTendencia();
+            System.out.println("Salio el vehiculo" + "costo total: " + costo);
+            setEstado(false);
         }
-        parking.actualizarTendencia();
-        System.out.println("Salio el vehiculo" + "costo total: " + costo);
-        setEstado(false);
+
     }
 
     public int obtenerCantidadDeEgresosEnLosUltimos10Segundos() {

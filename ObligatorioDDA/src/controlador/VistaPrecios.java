@@ -14,5 +14,7 @@ import logica.Tarifa;
 public interface VistaPrecios {
     
     public void listarPrecios(ArrayList<Tarifa> listaTarifas);
+    public void mostrarMensaje(String mensaje);
+    public void limpiarPrecios();
     
 }

@@ -27,6 +27,8 @@ public class ControladorCartelera implements Observador {
         this.vista = vista;
         this.parking = p;
         parking.agregarObservador(this);
+        cambioDisponibilidad();
+        cambioListaTarifas();
 
     }
 
@@ -34,7 +36,7 @@ public class ControladorCartelera implements Observador {
     public void actualizar(Object evento, Observable origen) {
         if (evento.equals(Parking.Eventos.cambioDisponibilidad)) {
             cambioDisponibilidad();
-        }else if(evento.equals(Parking.Eventos.cambioListaTarifas)){
+        } else if (evento.equals(Parking.Eventos.cambioListaTarifas)) {
             cambioListaTarifas();
         }
     }
@@ -44,12 +46,18 @@ public class ControladorCartelera implements Observador {
         lista.add(new AbstractMap.SimpleEntry(new TipoEtiquetaDiscapacitado().getNombre(), parking.cantidadCocherasLibresPorEtiqueta(new TipoEtiquetaDiscapacitado())));
         lista.add(new AbstractMap.SimpleEntry(new TipoEtiquetaElectrico().getNombre(), parking.cantidadCocherasLibresPorEtiqueta(new TipoEtiquetaElectrico())));
         lista.add(new AbstractMap.SimpleEntry(new TipoEtiquetaEmpleado().getNombre(), parking.cantidadCocherasLibresPorEtiqueta(new TipoEtiquetaDiscapacitado())));
-        
+
+        vista.limpiarListadoEtiquetas();
         vista.listarEtiquetas(lista, parking.cantidadCocherasLibres());
     }
 
     private void cambioListaTarifas() {
+        vista.limpiarListadoTipoVehiculos();
         vista.listarTipoVehiculo(parking.getListaTarifas());
+    }
+
+    public void salir() {
+        parking.quitarObservador(this);
     }
 
 }

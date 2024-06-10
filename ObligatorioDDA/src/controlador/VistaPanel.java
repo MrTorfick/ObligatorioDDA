@@ -18,6 +18,10 @@ public interface VistaPanel {
     public void mostrarTotalFacturado(double total);
     public void listarParkings(ArrayList<Parking> listaParkings);
     public void listarAnomalias(ArrayList<Anomalia> listaAnomalias);
+    public void mostrarMensaje(String mensaje);
+    public void mostrarListaPrecios(Parking p);
+    public void mostrarCartelera(Parking p);
+    public void limpiarListadoParkings();
     
     
 

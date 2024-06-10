@@ -19,8 +19,8 @@ public class main {
         SensorParking sensor = new SensorParking();
         DatosPrueba.cargar();
         
-        ArrayList<Estacionable> cocheras = DatosPrueba.getCocheras(50);
-        ArrayList<Transitable> vehiculos = DatosPrueba.getVehiculos(50);
+        ArrayList<Estacionable> cocheras = DatosPrueba.getCocheras();
+        ArrayList<Transitable> vehiculos = DatosPrueba.getVehiculos(135);
         new SimuladorIU(null, false, sensor, cocheras, vehiculos).setVisible(true);
         new Panel().setVisible(true);
         

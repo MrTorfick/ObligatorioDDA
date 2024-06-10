@@ -27,13 +27,12 @@ public class Cartelera extends javax.swing.JDialog implements VistaCartelera {
         super(parent);
         initComponents();
         setLocationRelativeTo(parent);
-        controlador = new ControladorCartelera(this, u);
         modeloTabla1.setColumnIdentifiers(new Object[]{"Cocheras", "Disponibilidad"});
         modeloTabla2.setColumnIdentifiers(new Object[]{"Tipo de vehiculo", "Precio/<UT>"});
         tablaEtiquetas.setModel(modeloTabla1);
         tablaTipoVehiculo.setModel(modeloTabla2);
-        //controlador
         setTitle("Cartelera electronica" + u.getNombre());
+        controlador = new ControladorCartelera(this, u);
     }
 
     @SuppressWarnings("unchecked")
@@ -49,10 +48,21 @@ public class Cartelera extends javax.swing.JDialog implements VistaCartelera {
         tablaTipoVehiculo = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Disponibilidad");
 
         jButton1.setText("Cerrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         tablaEtiquetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,6 +127,14 @@ public class Cartelera extends javax.swing.JDialog implements VistaCartelera {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        controlador.salir();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -132,8 +150,6 @@ public class Cartelera extends javax.swing.JDialog implements VistaCartelera {
     public void listarEtiquetas(ArrayList<Entry<String, Integer>> lista, int cantidadCocherasLibres) {
         totalDisponible.setText(cantidadCocherasLibres + "");
 
-        limpiarListadoEtiquetas();
-
         for (Map.Entry<String, Integer> e : lista) {
             modeloTabla1.addRow(new Object[]{e.getKey(),
                 e.getValue()});
@@ -142,7 +158,7 @@ public class Cartelera extends javax.swing.JDialog implements VistaCartelera {
 
     }
 
-    private void limpiarListadoEtiquetas() {
+    public void limpiarListadoEtiquetas() {
         int rowCount = modeloTabla1.getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {
             modeloTabla1.removeRow(i);
@@ -151,8 +167,6 @@ public class Cartelera extends javax.swing.JDialog implements VistaCartelera {
 
     @Override
     public void listarTipoVehiculo(ArrayList<Tarifa> listaTarifas) {
-        limpiarListadoTipoVehiculos();
-
         for (Tarifa t : listaTarifas) {
             modeloTabla2.addRow(new Object[]{t.getTipoVehiculo().getNombre(),
                 t.getCosto()});
@@ -160,7 +174,7 @@ public class Cartelera extends javax.swing.JDialog implements VistaCartelera {
 
     }
 
-    private void limpiarListadoTipoVehiculos() {
+    public void limpiarListadoTipoVehiculos() {
         int rowCount = modeloTabla2.getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {
             modeloTabla2.removeRow(i);

@@ -9,6 +9,7 @@ import controlador.ControladorPrecios;
 import controlador.VistaPanel;
 import controlador.VistaPrecios;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import logica.Parking;
 import logica.Tarifa;
@@ -27,11 +28,10 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
         super(parent);
         initComponents();
         setLocationRelativeTo(parent);
-        controlador = new ControladorPrecios(this, u);
         modeloTabla.setColumnIdentifiers(new Object[]{"Tipo de vehiculo", "Precio/<UT>"});
         tablaPrecios.setModel(modeloTabla);
-        controlador.listarPrecios();
         setTitle("Lista de precios de:" + u.getNombre());
+        controlador = new ControladorPrecios(this, u);
     }
 
     @SuppressWarnings("unchecked")
@@ -46,6 +46,12 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         tablaPrecios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -78,6 +84,11 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
         jLabel1.setText("Nuevo valor:");
 
         jButton1.setText("Cerrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -91,22 +102,21 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(jButton1)
-                        .addGap(86, 86, 86)
-                        .addComponent(jButton2)))
+                .addGap(82, 82, 82)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(90, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(188, 188, 188))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(100, 100, 100)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(136, 136, 136))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,11 +139,25 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int filaSeleccionada = tablaPrecios.getSelectedRow();
-        String tipoVehiculo = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
-        String nuevoValor = jTextField1.getText();
-        controlador.ActualizarListaPrecios(tipoVehiculo, nuevoValor);
+
+        if (filaSeleccionada == -1) {
+            mostrarMensaje("Debe seleccionar un tipo de vehiculo");
+        } else {
+            String tipoVehiculo = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
+            String nuevoValor = jTextField1.getText();
+            controlador.actualizarListaPrecios(tipoVehiculo, nuevoValor);
+        }
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+       controlador.salir();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -147,8 +171,6 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
 
     @Override
     public void listarPrecios(ArrayList<Tarifa> listaTarifas) {
-        limpiarTabla();
-
         for (Tarifa t : listaTarifas) {
             modeloTabla.addRow(new Object[]{t.getTipoVehiculo().getNombre(),
                 t.getCosto()});
@@ -156,7 +178,14 @@ public class ListaPrecios extends javax.swing.JDialog implements VistaPrecios {
 
     }
 
-    private void limpiarTabla() {
+
+    @Override
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    @Override
+    public void limpiarPrecios() {
         int rowCount = modeloTabla.getRowCount();
         for (int i = rowCount - 1; i >= 0; i--) {
             modeloTabla.removeRow(i);

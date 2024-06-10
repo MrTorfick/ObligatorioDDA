@@ -18,10 +18,13 @@ public class SistemaParking {
 
         // Parking parking = crearParking(nombre, direccion, listaTarifas, listaCocheras);
         // listaParkings.add(parking);
+        Parking p = new Parking(nombre, direccion, listaTarifas, listaCocheras);
+        //p.validar();
         listaParkings.add(new Parking(nombre, direccion, listaTarifas, listaCocheras));
     }
 
     public void agregarParking(Parking parking) {
+        //parking.validar();
         listaParkings.add(parking);
     }
 
@@ -37,15 +40,6 @@ public class SistemaParking {
      */
     public ArrayList<Parking> getListaParkings() {
         return listaParkings;
-    }
-
-    public Parking getParking(String nombre) {
-        for (Parking parking : listaParkings) {
-            if (parking.getNombre().equals(nombre)) {
-                return parking;
-            }
-        }
-        return null;
     }
 
     public ArrayList<Cochera> getCocheras() {
@@ -73,14 +67,25 @@ public class SistemaParking {
         return total;
     }
 
-    public Parking obtenerParking(String nombre) {
+    public Parking obtenerParking(String nombre) throws ParkingException {
         for (Parking p : listaParkings) {
 
             if (p.getNombre().equals(nombre)) {
                 return p;
             }
         }
-        return null;
+        throw new ParkingException("No se encontro un parking que coincida coincida con el parking seleccionado");
+    }
+
+    public double promedioTarifaParkingsPorTipoVehiculo(String tipoVehiculo) {
+        double promedio = 0;
+
+        for (Parking p : listaParkings) {
+            promedio += p.promedioTarifaTipoVehiculo(tipoVehiculo);
+        }
+
+        return promedio / listaParkings.size();
+
     }
 
 }
