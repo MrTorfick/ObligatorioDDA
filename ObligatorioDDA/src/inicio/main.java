@@ -17,7 +17,6 @@ public class main {
 
         //DatosPrueba d = new DatosPrueba();
         SensorParking sensor = new SensorParking();
-        DatosPrueba.cargar();
         
         ArrayList<Estacionable> cocheras = DatosPrueba.getCocheras();
         ArrayList<Transitable> vehiculos = DatosPrueba.getVehiculos(135);
